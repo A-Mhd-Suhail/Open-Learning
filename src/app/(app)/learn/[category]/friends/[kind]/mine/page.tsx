@@ -20,7 +20,8 @@ export default async function Mine({ params }: PageProps<"/learn/[category]/frie
   const base = `/learn/${category}/friends/${kind}`;
   return (
     <>
-      <PageHeader title="Existing groups" crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: k.title, href: base }, { label: "Existing groups" }]} />
+      <PageHeader title="Existing groups" description={`${k.title} you have already joined.`}
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title, href: base }, { label: "Existing groups" }]} backHref={base} />
       <GroupList groups={groups} category={category} empty={<>You have not joined any {k.title.toLowerCase()} yet. Create one or join a General group.</>} />
     </>
   );

@@ -14,10 +14,10 @@ export default async function StudentsPage({ searchParams }: PageProps<"/admin/s
   const { data: students } = await query;
   return (
     <>
-      <PageHeader title="Students" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Students" }]} />
+      <PageHeader title="Students" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Students" }]} backHref="/admin" />
       <form className="mb-4 flex gap-2" role="search">
         <label htmlFor="q" className="sr-only">Search students</label>
-        <input id="q" name="q" defaultValue={q} placeholder="Search name, email or Student ID" className="h-11 min-w-0 flex-1 sm:max-w-sm sm:flex-none sm:w-full rounded-md border border-border bg-card px-4 text-sm" />
+        <input id="q" name="q" defaultValue={q} placeholder="Search name, email or Student ID" className="h-11 min-w-0 flex-1 rounded-md border border-border bg-card px-4 text-base sm:w-full sm:max-w-sm sm:flex-none sm:text-sm" />
         <PendingButton className="h-11 cursor-pointer rounded-md bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover">Search</PendingButton>
       </form>
       <div className="overflow-x-auto rounded-lg border border-border bg-card">

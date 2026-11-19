@@ -7,5 +7,5 @@ export const metadata: Metadata = { title: "Add video · Admin" };
 
 export default async function NewVideo() {
   await requireAdmin();
-  return (<><PageHeader title="Add video" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos", href: "/admin/videos" }, { label: "Add" }]} /><VideoForm /></>);
+  return (<><PageHeader title="Add video" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos", href: "/admin/videos" }, { label: "Add" }]} backHref="/admin/videos" /><VideoForm /></>);
 }

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { requireSession } from "@/lib/auth";
 import { PageHeader } from "@/components/app/PageHeader";
-import { CopyButton } from "@/components/app/CopyButton";
+import { StudentCard } from "@/components/app/StudentCard";
+import { Avatar } from "@/components/ui/avatar";
+import { SectionCard } from "@/components/ui/section-card";
+import { getCategory } from "@/lib/categories";
 import { ProfileForm } from "./ProfileForm";
 
 export const metadata: Metadata = { title: "Profile" };
@@ -9,33 +12,40 @@ export const metadata: Metadata = { title: "Profile" };
 export default async function ProfilePage() {
   const { profile } = await requireSession();
   const joined = new Intl.DateTimeFormat("en-IN", { dateStyle: "long", timeZone: "Asia/Kolkata" }).format(new Date(profile.created_at));
-  const rows: [string, React.ReactNode][] = [
-    ["Student ID", <span key="id" className="inline-flex items-center gap-1 font-mono">{profile.student_id}<CopyButton value={profile.student_id} label="Copy Student ID" /></span>],
+  const role = profile.role === "admin" ? "Administrator" : "Student";
+  const rows: [string, string][] = [
     ["Google account", profile.email],
-    ["Learning category", profile.category ? (profile.category === "school" ? "School" : profile.category.toUpperCase()) : "Not selected yet"],
+    ["Learning path", profile.category ? (getCategory(profile.category)?.name ?? profile.category) : "Not selected yet"],
     ["Member since", joined],
   ];
   return (
     <>
-      <PageHeader title="Your profile" crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Profile" }]} />
-      <div className="grid gap-10 md:grid-cols-2 md:gap-14">
-        <section>
-          <div className="mb-6 flex items-center gap-4">
-            {profile.avatar_url
-              // eslint-disable-next-line @next/next/no-img-element
-              ? <img src={profile.avatar_url} alt="" width={64} height={64} referrerPolicy="no-referrer" className="h-16 w-16 rounded-full border border-border object-cover" />
-              : <span aria-hidden="true" className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-on-primary">{profile.display_name[0]?.toUpperCase()}</span>}
-            <div><p className="font-display text-xl font-semibold">{profile.display_name}</p><p className="text-sm text-muted-foreground">{profile.role === "admin" ? "Administrator" : "Student"}</p></div>
-          </div>
+      <PageHeader title="Your profile" description="Your name is the only thing you can change. Your Student ID and email are permanent."
+        crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Profile" }]} />
+      <div className="grid gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:gap-12">
+        <div className="space-y-6">
+          <StudentCard name={profile.display_name} studentId={profile.student_id} role={role} />
           <dl className="divide-y divide-border border-y border-border text-sm">
-            {rows.map(([k, v]) => (<div key={k} className="flex justify-between gap-4 py-3.5"><dt className="text-muted-foreground">{k}</dt><dd className="text-right font-medium">{v}</dd></div>))}
+            {rows.map(([k, v]) => (
+              <div key={k} className="flex flex-wrap justify-between gap-x-4 gap-y-1 py-3.5">
+                <dt className="text-muted-foreground">{k}</dt>
+                <dd className="min-w-0 break-all text-right font-medium">{v}</dd>
+              </div>
+            ))}
           </dl>
-        </section>
-        <section className="rounded-lg border border-border bg-card p-6">
-          <h2 className="text-xl">Edit profile</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Your Student ID and email are permanent and cannot be changed.</p>
-          <ProfileForm initialName={profile.display_name} />
-        </section>
+        </div>
+        <div className="min-w-0 space-y-6">
+          <div className="flex items-center gap-4">
+            <Avatar name={profile.display_name} src={profile.avatar_url} size="xl" />
+            <div className="min-w-0">
+              <p className="truncate font-display text-2xl font-semibold">{profile.display_name}</p>
+              <p className="text-sm text-muted-foreground">{role}</p>
+            </div>
+          </div>
+          <SectionCard title="Edit profile" description="This is how you appear to friends and in study groups.">
+            <ProfileForm initialName={profile.display_name} />
+          </SectionCard>
+        </div>
       </div>
     </>
   );

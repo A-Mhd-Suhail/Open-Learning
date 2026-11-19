@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Mic, MicOff, PhoneOff, Headphones, Loader2, RefreshCw, Users } from "lucide-react";
-import { Room, RoomEvent, Track, ConnectionState, type Participant } from "livekit-client";
+import { Room, RoomEvent, Track, ConnectionState, AudioPresets, type Participant } from "livekit-client";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
@@ -16,6 +16,7 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
   const [error, setError] = useState<string | null>(null);
   const [people, setPeople] = useState<P[]>([]);
   const [muted, setMuted] = useState(false);
+  const [audioBlocked, setAudioBlocked] = useState(false); // mobile browsers (iOS Safari) often block playback until a tap
   const room = useRef<Room | null>(null);
   const audioBox = useRef<HTMLDivElement>(null);
   const beat = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -42,7 +43,7 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
   }, [groupId]);
 
   const leave = useCallback(() => {
-    teardown(); setPeople([]); setPhase("idle"); setMuted(false); setError(null);
+    teardown(); setPeople([]); setPhase("idle"); setMuted(false); setError(null); setAudioBlocked(false);
   }, [teardown]);
 
   // Unmount + tab close/navigation away. Server-side last_seen expiry (90s) is the backstop if the request is dropped.
@@ -54,11 +55,18 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
 
   async function join() {
     setError(null); setPhase("mic");
+    // The token request (several database checks on the server) runs WHILE the browser asks for the microphone,
+    // instead of after it: the slowest two steps of joining now overlap.
+    const tokenReq = fetch("/api/livekit-token", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(target) })
+      .then(async (res) => ({ res, data: await res.json().catch(() => ({})) }));
+    tokenReq.catch(() => {}); // handled below; avoids an unhandled rejection if the mic step fails first
     try {
       if (!navigator.mediaDevices?.getUserMedia) throw new Error("unsupported");
       const s = await navigator.mediaDevices.getUserMedia({ audio: true });
       s.getTracks().forEach((t) => t.stop());
     } catch (e) {
+      // The server may already have recorded our presence for this attempt: release it.
+      void tokenReq.then(({ res }) => { if (res.ok && groupId) void createClient().rpc("voice_leave", { p_group: groupId }); }).catch(() => {});
       const denied = e instanceof DOMException && (e.name === "NotAllowedError" || e.name === "SecurityError");
       setError(denied ? "Microphone access was blocked. Allow the microphone in your browser's address bar, then try again."
         : e instanceof DOMException && e.name === "NotFoundError" ? "No microphone was found on this device." : "Your browser cannot access a microphone here (HTTPS or localhost is required).");
@@ -66,17 +74,22 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
     }
     setPhase("connecting");
     try {
-      const res = await fetch("/api/livekit-token", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(target) });
-      const data = await res.json().catch(() => ({}));
+      const { res, data } = await tokenReq;
       if (res.status === 409 || data.code === "full") { setError(data.error ?? "This room is full right now."); setPhase("full"); return; }
       if (!res.ok) throw new Error(data.error ?? "Could not get a voice token.");
       if (groupId) joined.current = true; // the token route already recorded presence
-      const r = new Room({ adaptiveStream: true, dynacast: true });
+      const r = new Room({
+        adaptiveStream: true, dynacast: true,
+        // Voice-tuned: lower bitrate and silence suppression keep the stream small and steady on weak or mobile networks.
+        publishDefaults: { audioPreset: AudioPresets.speech, dtx: true, red: true },
+        audioCaptureDefaults: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
       room.current = r;
       r.on(RoomEvent.TrackSubscribed, (t) => { if (t.kind === Track.Kind.Audio) audioBox.current?.appendChild(t.attach()); })
         .on(RoomEvent.TrackUnsubscribed, (t) => { t.detach().forEach((el) => el.remove()); })
         .on(RoomEvent.ParticipantConnected, sync).on(RoomEvent.ParticipantDisconnected, sync)
         .on(RoomEvent.ActiveSpeakersChanged, sync).on(RoomEvent.TrackMuted, sync).on(RoomEvent.TrackUnmuted, sync)
+        .on(RoomEvent.AudioPlaybackStatusChanged, () => setAudioBlocked(!r.canPlaybackAudio))
         .on(RoomEvent.Reconnecting, () => setPhase("reconnecting"))
         .on(RoomEvent.Reconnected, () => { setPhase("connected"); sync(); })
         .on(RoomEvent.Disconnected, () => {
@@ -84,9 +97,12 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
           teardown(); setPeople([]); setPhase("idle"); setMuted(false);
           setError("You were disconnected from the room."); 
         });
+      // Opens the network path to the media server before connect() (saves a round trip on slow links).
+      r.prepareConnection(data.url, data.token).catch(() => {});
       await r.connect(data.url, data.token);
       await r.localParticipant.setMicrophoneEnabled(true);
       await r.startAudio().catch(() => {});
+      setAudioBlocked(!r.canPlaybackAudio);
       if (r.state === ConnectionState.Connected) setPhase("connected");
       sync();
       if (groupId) {
@@ -124,6 +140,12 @@ export function VoiceRoom({ target, onLeave, leaveLabel = "Leave room" }: { targ
       {error && <p role="alert" className="mt-3 rounded-md border border-destructive/40 p-3 text-sm text-destructive">{error}</p>}
       {phase === "full" && (
         <p className="mt-3 flex items-center gap-2 text-sm text-muted-foreground"><Users size={16} aria-hidden="true" />Someone needs to leave before you can join. Spots free up automatically.</p>
+      )}
+      {live && audioBlocked && (
+        <button type="button" onClick={() => { void room.current?.startAudio().then(() => setAudioBlocked(false)).catch(() => {}); }}
+          className="mt-3 flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-accent bg-accent/10 px-4 text-sm font-semibold">
+          <Headphones size={16} aria-hidden="true" />Tap to turn on sound
+        </button>
       )}
       {live && (
         <ul className="mt-5 grid gap-3 sm:grid-cols-2" aria-label="Participants">

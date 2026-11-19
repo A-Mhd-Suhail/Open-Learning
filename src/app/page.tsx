@@ -1,8 +1,10 @@
 import { Navbar } from "@/components/marketing/Navbar";
 import { Hero } from "@/components/marketing/Hero";
+import { Features } from "@/components/marketing/Features";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { CategoriesSection } from "@/components/marketing/CategoriesSection";
-import { TogetherSection } from "@/components/marketing/TogetherSection";
+import { LibrarySection } from "@/components/marketing/LibrarySection";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
 import { Footer } from "@/components/marketing/Footer";
 
 export default function Home() {
@@ -11,9 +13,11 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <Hero />
+        <Features />
         <HowItWorks />
         <CategoriesSection />
-        <TogetherSection />
+        <LibrarySection />
+        <ClosingCta />
       </main>
       <Footer />
     </>

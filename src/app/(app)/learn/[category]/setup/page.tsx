@@ -16,7 +16,7 @@ export default async function LanguageSetup({ params, searchParams }: PageProps<
   return (
     <>
       <PageHeader title="Set up Language Learning" description="Three quick steps, then you can join voice rooms, chat and the community."
-        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning", href: "/learn/languages" }, { label: "Set up" }]} backHref="/learn/languages" />
       <div className="max-w-2xl rounded-lg border border-border bg-card p-5 sm:p-8">
         <ProfileForm category={category} mode="setup" initial={profile ?? undefined} />
       </div>

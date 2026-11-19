@@ -11,7 +11,8 @@ export default async function Create({ params }: PageProps<"/learn/[category]/fr
   const info = getCategory(category)!, k = KIND_INFO[kind as Kind];
   return (
     <>
-      <PageHeader title="Create a group" crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: k.title, href: `/learn/${category}/friends/${kind}` }, { label: "Create" }]} />
+      <PageHeader title="Create a group" description="Name it, choose who can join, then invite friends."
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title, href: `/learn/${category}/friends/${kind}` }, { label: "Create" }]} backHref={`/learn/${category}/friends/${kind}`} />
       <CreateGroupForm category={category} kind={kind} />
     </>
   );

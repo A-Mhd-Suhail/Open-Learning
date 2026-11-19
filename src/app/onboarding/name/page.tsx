@@ -18,7 +18,7 @@ async function Content() {
 export default function NamePage() {
   return (
     <AuthShell step={2}>
-      <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" aria-hidden="true" />}>
+      <Suspense fallback={<div className="ol-skeleton h-64 rounded-lg" aria-hidden="true" />}>
         <Content />
       </Suspense>
     </AuthShell>

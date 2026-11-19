@@ -1,5 +1,20 @@
 import type { NextConfig } from "next";
 
+// Report-only first: violations show in the browser console, nothing is blocked. Enforce after a clean soak on production.
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://lh3.googleusercontent.com",
+  "media-src 'self' blob: https://*.supabase.co",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.livekit.cloud wss://*.livekit.cloud",
+  "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join("; ");
+
 const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
@@ -13,6 +28,8 @@ const nextConfig: NextConfig = {
     return [{
       source: "/:path*",
       headers: [
+        { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+        { key: "Content-Security-Policy-Report-Only", value: CSP_REPORT_ONLY },
         { key: "X-Content-Type-Options", value: "nosniff" },
         { key: "X-Frame-Options", value: "DENY" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

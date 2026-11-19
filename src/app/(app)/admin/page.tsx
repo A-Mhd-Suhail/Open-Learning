@@ -12,7 +12,7 @@ export default async function AdminHome() {
   const [students, videos, groups] = await Promise.all([count("profiles"), count("videos"), count("groups")]);
   return (
     <>
-      <PageHeader title="Admin" description="Manage content and monitor the platform." crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Admin" }]} />
+      <PageHeader title="Admin" description="Manage content and monitor the platform." crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Admin" }]} backHref="/dashboard" />
       <RowList>
         <li><RowLink icon={Film} title="Videos" meta={videos} description="Import from Google Sheets or Excel, edit, delete." href="/admin/videos" /></li>
         <li><RowLink icon={Users} title="Students" meta={students} description="Registered students and their Student IDs." href="/admin/students" /></li>

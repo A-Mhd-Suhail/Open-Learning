@@ -59,7 +59,7 @@ export function VideoImporter() {
           </>
         )}
       </div>
-      <div className="mt-4 flex gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         <Button variant="secondary" disabled={!ready || busy !== null} onClick={() => run("preview")}>{busy === "preview" ? "Validating…" : "Preview & validate"}</Button>
         <Button disabled={!ready || busy !== null || !preview || preview.headerErrors.length > 0 || preview.willCreate + preview.willUpdate === 0} onClick={() => run("import")}>
           <Upload size={16} aria-hidden="true" />{busy === "import" ? "Importing…" : "Import valid rows"}</Button>

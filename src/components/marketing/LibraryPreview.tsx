@@ -1,43 +1,38 @@
 import { Play, Search } from "lucide-react";
 
-/** A faithful, static preview of the student video library (sample rows, labelled as such). It shows the product doing its job. */
-const ROWS = [
-  { t: "Rotational motion: torque and angular momentum", s: "Physics", c: "Class 11", e: "JEE" },
-  { t: "Photosynthesis in higher plants", s: "Biology", c: "Class 11", e: "NEET" },
-  { t: "Quadratic equations: nature of roots", s: "Maths", c: "Class 10", e: "School" },
-  { t: "Chemical bonding and hybridisation", s: "Chemistry", c: "Class 11", e: "JEE" },
-  { t: "Light: reflection and refraction", s: "Science", c: "Class 10", e: "School" },
-];
+const FILTERS = ["Class", "Subject", "Chapter", "Topic", "Year", "Language"];
+const WIDTHS = ["w-4/5", "w-2/3", "w-[72%]", "w-3/5"];
 
+/** Layout illustration of the student video library. Bars stand in for lesson titles: nothing here pretends to be real content. */
 export function LibraryPreview() {
   return (
     <figure className="m-0">
-      <div className="overflow-hidden rounded-xl border border-white/15 bg-card" role="img" aria-label="Preview of the Open Learning video library with search, filters and lesson rows">
+      <div className="overflow-hidden rounded-lg border border-border bg-card" role="img" aria-label="Illustration of the Open Learning video library: a search box, six filters and a list of lessons">
         <div aria-hidden="true">
-          <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-            <Search size={16} className="text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Search title, chapter, topic</span>
+          <div className="flex items-center gap-3 border-b border-border px-4 py-3.5">
+            <Search size={16} className="shrink-0 text-muted-foreground" />
+            <span className="truncate text-sm text-muted-foreground">Search title, chapter, topic, channel…</span>
           </div>
-          <div className="flex flex-wrap gap-2 border-b border-border bg-muted/50 px-4 py-3 text-xs font-semibold">
-            {["Class 11", "Physics", "All chapters", "English"].map((f, i) => (
-              <span key={f} className={i < 2 ? "rounded-full border border-accent bg-accent/10 px-3 py-1 text-accent" : "rounded-full border border-border px-3 py-1 text-muted-foreground"}>{f}</span>
+          <div className="grid grid-cols-2 gap-2 border-b border-border bg-muted/50 p-4 sm:grid-cols-3">
+            {FILTERS.map((f) => (
+              <span key={f} className="flex h-9 items-center rounded-md border border-border bg-card px-3 text-xs font-semibold text-muted-foreground">{f}</span>
             ))}
           </div>
           <ul>
-            {ROWS.map((r, i) => (
-              <li key={r.t} style={{ "--i": i + 2 } as React.CSSProperties} className="rise flex items-center gap-4 border-b border-border px-4 py-3.5 last:border-0">
-                <span className="flex h-9 w-14 shrink-0 items-center justify-center rounded bg-muted text-accent"><Play size={14} fill="currentColor" /></span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-semibold">{r.t}</span>
-                  <span className="mt-0.5 block text-xs text-muted-foreground">{r.s} · {r.c} · {r.e}</span>
+            {WIDTHS.map((w, i) => (
+              <li key={i} className="flex items-center gap-4 border-b border-border px-4 py-4 last:border-0">
+                <span className="flex h-10 w-16 shrink-0 items-center justify-center rounded bg-band text-accent"><Play size={14} fill="currentColor" /></span>
+                <span className="min-w-0 flex-1 space-y-2">
+                  <span className={`block h-3 rounded-sm bg-foreground/15 ${w}`} />
+                  <span className="block h-2.5 w-2/5 rounded-sm bg-foreground/8" />
                 </span>
-                <span className="hidden text-xs font-semibold text-accent sm:block">Watch</span>
+                <span className="hidden text-xs font-semibold text-gold sm:block">Watch</span>
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <figcaption className="mt-3 text-xs text-band-muted">Sample lessons shown for illustration. Your library is filled by the Open Learning team.</figcaption>
+      <figcaption className="mt-3 text-xs text-muted-foreground">Illustration of the library layout. Lessons are added by the Open Learning team and open on YouTube.</figcaption>
     </figure>
   );
 }

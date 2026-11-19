@@ -13,7 +13,7 @@ const LEVEL_HINT: Record<Proficiency, string> = {
 };
 const STEPS = ["Target language", "What you know", "Review"] as const;
 
-const chip = "inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-3.5 text-sm font-medium transition-colors duration-150 motion-reduce:transition-none hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring";
+const chip = "inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-3.5 text-sm font-medium transition-colors duration-150 motion-reduce:transition-none hover:bg-muted has-[:checked]:border-foreground has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring";
 const input = "h-11 w-full rounded-md border border-border bg-background px-3 text-base sm:text-sm";
 
 export function ProfileForm({ category, mode, initial }: { category: string; mode: "setup" | "edit"; initial?: Initial }) {
@@ -76,7 +76,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
           <ol className="flex gap-2">
             {STEPS.map((s, i) => (
               <li key={s} className="flex-1" aria-current={i === step ? "step" : undefined}>
-                <div className={`h-1.5 rounded-full ${i <= step ? "bg-primary" : "bg-border"}`} />
+                <div className={`h-1 rounded-full ${i <= step ? "bg-accent" : "bg-border"}`} />
                 <p className={`mt-2 text-xs sm:text-sm ${i === step ? "font-semibold text-foreground" : "text-muted-foreground"}`}><span className="sr-only">Step </span>{i + 1}. {s}</p>
               </li>
             ))}
@@ -86,7 +86,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
 
       {show(0) && (
         <fieldset className="space-y-3">
-          <legend className="font-display text-xl font-bold">Which language do you want to learn?</legend>
+          <legend className="font-display text-xl font-semibold">Which language do you want to learn?</legend>
           <p className="text-sm text-muted-foreground">We use this to suggest rooms, posts and learners for you.</p>
           <div className="flex flex-wrap gap-2">
             {LANGUAGES.map((l) => (
@@ -107,7 +107,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
       {show(1) && (
         <>
           <fieldset className="space-y-3">
-            <legend className="font-display text-xl font-bold">Your level in {target || "your target language"}</legend>
+            <legend className="font-display text-xl font-semibold">Your level in {target || "your target language"}</legend>
             <div className="grid gap-2 sm:grid-cols-2">
               {PROFICIENCY.map((p) => (
                 <label key={p} className={`${chip} flex-col !items-start justify-center py-2`}>
@@ -119,7 +119,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
             </div>
           </fieldset>
           <fieldset className="space-y-3">
-            <legend className="font-display text-xl font-bold">Languages you already know <span className="text-sm font-normal text-muted-foreground">(optional)</span></legend>
+            <legend className="font-display text-xl font-semibold">Languages you already know <span className="text-sm font-normal text-muted-foreground">(optional)</span></legend>
             <div className="flex flex-wrap gap-2">
               {knownOptions.map((l) => (
                 <label key={l} className={chip}><input type="checkbox" className="sr-only" checked={known.includes(l)} onChange={(e) => toggleKnown(l, e.target.checked)} />{l}</label>
@@ -139,7 +139,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
         <div className="space-y-5">
           {wizard && (
             <>
-              <h2 className="font-display text-xl font-bold">Review your profile</h2>
+              <h2 className="font-display text-xl font-semibold">Review your profile</h2>
               <dl className="divide-y divide-border rounded-lg border border-border bg-card text-sm">
                 {[["Learning", target || "-"], ["Level", PROFICIENCY_LABEL[level]], ["Already know", cleanKnown.length ? cleanKnown.join(", ") : "None added"]].map(([k, v]) => (
                   <div key={k} className="flex flex-wrap justify-between gap-x-4 gap-y-1 px-4 py-3"><dt className="text-muted-foreground">{k}</dt><dd className="font-medium">{v}</dd></div>
@@ -161,7 +161,7 @@ export function ProfileForm({ category, mode, initial }: { category: string; mod
         {wizard && step < 2 ? (
           <Button key="continue" type="button" onClick={next}>Continue<ArrowRight size={16} aria-hidden="true" /></Button>
         ) : (
-          <Button key="submit" type="submit" disabled={pending}>{pending ? <Loader2 size={16} className="animate-spin motion-reduce:animate-none" aria-hidden="true" /> : <Check size={16} aria-hidden="true" />}{wizard ? "Create my profile" : "Save changes"}</Button>
+          <Button key="submit" type="submit" disabled={pending}>{pending ? <Loader2 size={16} className="ol-spinner" aria-hidden="true" /> : <Check size={16} aria-hidden="true" />}{wizard ? "Create my profile" : "Save changes"}</Button>
         )}
       </div>
     </form>

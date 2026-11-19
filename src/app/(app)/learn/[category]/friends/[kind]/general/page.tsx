@@ -19,7 +19,7 @@ export default async function General({ params }: PageProps<"/learn/[category]/f
   return (
     <>
       <PageHeader title="General groups" description={`Open ${info.name} ${k.title.toLowerCase()} rooms. Join any of them.`}
-        crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: k.title, href: base }, { label: "General groups" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title, href: base }, { label: "General groups" }]} backHref={base} />
       <GroupList groups={(groups ?? []) as Group[]} category={category} joined={new Set((mine ?? []).map((m) => m.group_id))}
         empty="General groups have not been created yet. The database seed (supabase/migrations/0002) creates them." />
     </>

@@ -35,14 +35,16 @@ export default async function GroupPage({ params }: PageProps<"/learn/[category]
   const info = getCategory(category)!, k = KIND_INFO[kind as Kind];
   const isLang = isLanguageCategory(category) && (kind === "voice" || kind === "chat");
   const crumbs = isLang
-    ? [{ label: info.name, href: `/learn/${category}` }, { label: kind === "voice" ? "Voice rooms" : "Chat rooms", href: `/learn/${category}/${kind}` }, { label: group.name }]
-    : [{ label: info.name, href: `/learn/${category}` }, { label: k.title, href: `/learn/${category}/friends/${kind}` }, { label: group.name }];
+    ? [{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: kind === "voice" ? "Voice rooms" : "Chat rooms", href: `/learn/${category}/${kind}` }, { label: group.name }]
+    : [{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title, href: `/learn/${category}/friends/${kind}` }, { label: group.name }];
+  // The true parent is the list this group belongs to: language rooms live in the room browser, study groups in "Existing groups".
+  const backHref = isLang ? `/learn/${category}/${kind}` : `/learn/${category}/friends/${kind}/mine`;
   const { data: me } = await supabase.from("group_members").select("role").eq("group_id", groupId).eq("user_id", user.id).maybeSingle();
 
   if (!me) {
     return (
       <>
-        <PageHeader title={group.name} description={group.description || undefined} crumbs={crumbs} />
+        <PageHeader title={group.name} description={group.description || undefined} crumbs={crumbs} backHref={backHref} />
         <form action={joinGroupAction} className="rounded-lg border border-border bg-card p-6">
           <p className="mb-4 text-muted-foreground">{isLang ? "Join this room to take part." : "Join this group to read and take part in the conversation."}</p>
           <input type="hidden" name="id" value={group.id} /><input type="hidden" name="category" value={category} /><input type="hidden" name="kind" value={kind} />
@@ -72,7 +74,7 @@ export default async function GroupPage({ params }: PageProps<"/learn/[category]
 
   return (
     <>
-      <PageHeader title={group.name} description={group.description || undefined} crumbs={crumbs} />
+      <PageHeader title={group.name} description={group.description || undefined} crumbs={crumbs} backHref={backHref} />
       {isLang && (
         <dl className="mb-6 flex flex-wrap gap-x-6 gap-y-2 rounded-lg border border-border bg-card p-4 text-sm" aria-label="Room details">
           {group.language && <div><dt className="text-xs text-muted-foreground">Language</dt><dd className="font-semibold">{group.language}</dd></div>}

@@ -4,7 +4,7 @@ test("landing renders without horizontal overflow or console errors", async ({ p
   const errors: string[] = [];
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Learn anything");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Connecting Students");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   expect(errors).toEqual([]);
 });

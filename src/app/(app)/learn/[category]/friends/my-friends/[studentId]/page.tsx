@@ -30,7 +30,7 @@ export default async function StudentProfile({ params }: PageProps<"/learn/[cate
   const joined = new Intl.DateTimeFormat("en-IN", { dateStyle: "long", timeZone: "Asia/Kolkata" }).format(new Date(p.created_at));
   return (
     <>
-      <PageHeader title={p.display_name} crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: "Friends", href: `/learn/${category}/friends/my-friends` }, { label: p.display_name }]} />
+      <PageHeader title={p.display_name} crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: "Friends", href: `/learn/${category}/friends/my-friends` }, { label: p.display_name }]} backHref={`/learn/${category}/friends/my-friends`} />
       <section className="max-w-xl rounded-lg border border-border bg-card p-6">
         <dl className="space-y-3 text-sm">
           <div className="flex justify-between"><dt className="text-muted-foreground">Student ID</dt><dd className="font-mono">{p.student_id}</dd></div>

@@ -10,7 +10,7 @@ const TONES = {
 
 export function Badge({ tone = "neutral", children, className }: { tone?: keyof typeof TONES; children: React.ReactNode; className?: string }) {
   return (
-    <span className={cn("inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded border px-2 py-0.5 text-xs font-semibold leading-5", TONES[tone], className)}>
+    <span className={cn("inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold leading-5", TONES[tone], className)}>
       {children}
     </span>
   );

@@ -14,7 +14,7 @@ export default async function NewPostPage({ params }: PageProps<"/learn/[categor
   return (
     <>
       <PageHeader title="Create post" description="Share text and up to 6 images with the Language Learning community."
-        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Languages", href: `/learn/${category}` }, { label: "Community", href: `/learn/${category}/community` }, { label: "Create post" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning", href: `/learn/${category}` }, { label: "Community", href: `/learn/${category}/community` }, { label: "Create post" }]} backHref={`/learn/${category}/community`} />
       <div className="mx-auto max-w-2xl">
         <CreatePostForm category={category} userId={user.id} defaultLanguage={languageProfile.target_language} />
       </div>

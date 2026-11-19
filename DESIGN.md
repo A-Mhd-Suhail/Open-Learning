@@ -3,24 +3,24 @@ name: Open Learning
 ---
 # Design system
 
-A study desk, not a SaaS template. Cool paper-grey ground, ink text, one deep-navy field for committed regions (sidebar, sign-up panel, closing band), and a flat highlighter yellow used the way a student uses a highlighter: once per view, on the one thing that matters. No gradients, glow, glass, tinted shadows or gradient text. Rejected by the user and banned: violet/pink gradients, glowing edges, identical card grids.
+Black, white and gold. A serious, typographic learning platform: white paper in light mode, black in dark mode, committed black regions (navigation rail, tab bar, closing bands), and gold used as foil: the active state, one primary action per view, the Student ID and hairlines. No gradients, glow, glass or tinted shadows. Full written system: `docs/DESIGN_SYSTEM.md`.
 
 ## Colour (tokens in src/app/globals.css)
-- Light: background #f3f5f7, card #ffffff, ink #0c1a2b, muted text #4f5e6e, border #d5dbe3, primary navy #0f3d6e, band #0b2a4a, accent highlighter #ffd23f (text on it is ink).
-- Dark: background #09121c, card #101c2a, text #e9eef4, border #223347, primary #7db2ec, band #0f2238.
-- Status: success #1b7a47 / #5cc98a, destructive #b3261e / #f28b82.
-- Strategy: restrained neutrals plus committed navy regions. Yellow only for: the `.mark` swipe behind one phrase or ID, the active sidebar item, and the single accent button on a navy band.
+- Light: background #ffffff, ink #0a0a0a, muted text #595959, border #e4e4e2, primary black, gold fill #d4af37, gold text #7a5a0f (AA).
+- Dark: background #0a0a0a, card #141414, text #f5f5f4, border #2b2b2b, primary gold.
+- Band (rail, tab bar): always black, text white, muted #a8a8a8. Status: success #1b7a47 / #5cc98a, destructive #b3261e / #f28b82.
 
 ## Type
-- Display: Bricolage Grotesque (h1, h2, row titles). Body/UI: Public Sans. IDs and code: system monospace with tabular numerals (`.num`).
-- Display weight 600-650, tracking -0.022em, balanced wrapping. Body 16px / 1.55, measure under 75ch.
+Display Bodoni Moda, body Manrope, mono for IDs. Scale classes `.t-display .t-h1 .t-h2 .t-h3 .t-body .t-small .t-eyebrow`.
 
 ## Shape and depth
-- Radius: 6px controls, 8px panels. Hairline 1px borders carry structure; there are no drop shadows.
-- Lists are ruled rows (`RowList` / `RowLink`), not card grids. `PanelLink` is reserved for a two-way choice. Video cards are borderless: image, meta, title, one outlined action.
+Radius 6px controls, 10px cards. Flat cards with hairline borders; one soft shadow (`shadow-card`) only for floating layers.
+
+## Navigation
+Desktop: fixed 272px RIGHT-hand panel (black, gold active bar), content column never squeezed. Mobile: compact header, bottom tab bar (Home, Learn, Language, Profile), account sheet. Every inner page opens with Back + breadcrumb (`PageHeader`).
 
 ## Motion
-- One authored moment: the landing library preview's rows settle in once (`.rise`, 0.7s, exponential ease-out). Hover uses 150-200ms colour and a 4px arrow shift. All motion is removed under prefers-reduced-motion.
+150-200ms colour and transform; skeleton sweep; all removed under prefers-reduced-motion.
 
 ## Components
-Button (primary, secondary, ghost, accent), RowLink, RowList, PanelLink, PageHeader, StudentCard (the Student ID as a library card), AuthShell (navy explainer panel plus calm form), AppShell (navy sidebar, yellow active item), VideoCard, Logo (open "O" plus highlighter bar).
+Button, RowLink, RowList, PanelLink, PageHeader, BackButton, Breadcrumbs, StudentCard, AuthShell, AppShell (RightRail, MobileHeader, MobileTabBar, AccountMenu), VideoCard, Badge, Avatar, EmptyState, Dialog, Skeleton, Logo (open gold "O" on a black tile).

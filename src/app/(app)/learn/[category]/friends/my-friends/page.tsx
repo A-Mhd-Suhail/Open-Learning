@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { PendingButton } from "@/components/ui/pending-button";
 import Link from "next/link";
-import { Phone, Search, UserMinus, UserPlus, Check, X } from "lucide-react";
+import { Phone, Search, UserMinus, UserPlus, Users, Check, X } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/app/PageHeader";
 import { requireSession } from "@/lib/auth";
 import { getCategory } from "@/lib/categories";
@@ -41,17 +42,18 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
   const sid = (id: string) => prof.get(id)?.student_id ?? "";
   const base = `/learn/${category}/friends`;
   const hidden = (id: string) => <><input type="hidden" name="id" value={id} /><input type="hidden" name="category" value={category} /></>;
-  const card = "rounded-lg border border-border bg-card p-5";
+  const card = "rounded-lg border border-border bg-card p-5 sm:p-6";
 
   return (
     <>
-      <PageHeader title="Friends" crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: base }, { label: "Friends" }]} />
+      <PageHeader title="Friends" description="Find students by ID, accept requests, then call or study together."
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: base }, { label: "Friends" }]} backHref={base} />
       <div className="space-y-8">
         <section className={card} aria-labelledby="find">
           <h2 id="find" className="font-bold">Find students</h2>
           <form role="search" className="mt-3 flex gap-2">
             <label htmlFor="q" className="sr-only">Search by name or Student ID</label>
-            <input id="q" name="q" defaultValue={q} placeholder="Name or Student ID (e.g. OL-2026-000123)" className="h-11 w-full max-w-md rounded-md border border-border bg-background px-4 text-sm" />
+            <input id="q" name="q" defaultValue={q} placeholder="Name or Student ID (e.g. OL-2026-000123)" className="h-11 w-full max-w-md rounded-md border border-border bg-background px-4 text-base sm:text-sm" />
             <PendingButton className={`${btn} h-11 bg-primary px-5 text-on-primary hover:bg-primary-hover`}><Search size={16} aria-hidden="true" />Search</PendingButton>
           </form>
           {q.length >= 2 && (
@@ -67,7 +69,7 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
                   </li>
                 );
               })}
-              {!results.length && <li className="py-4 text-sm text-muted-foreground">No students found for “{q}”.</li>}
+              {!results.length && <li className="py-4 text-sm text-muted-foreground" role="status">No students found for “{q}”. Check the spelling or the Student ID.</li>}
             </ul>
           )}
         </section>
@@ -91,7 +93,7 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
 
         <section className={card} aria-labelledby="fr">
           <h2 id="fr" className="font-bold">Your friends ({friendIds.length})</h2>
-          {friendIds.length === 0 ? <p className="mt-3 text-sm text-muted-foreground">No friends yet. Search above, or share your Student ID from the dashboard.</p> : (
+          {friendIds.length === 0 ? <EmptyState icon={Users} title="No friends yet" description="Search above by name or Student ID, or share your own Student ID from the dashboard." /> : (
             <ul className="mt-3 divide-y divide-border">
               {friendIds.map((id) => (
                 <li key={id} className="flex flex-wrap items-center justify-between gap-3 py-3">

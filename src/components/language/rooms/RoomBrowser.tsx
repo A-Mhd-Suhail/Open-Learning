@@ -5,18 +5,28 @@ import { isLanguageCategory } from "@/lib/categories";
 import { ALL_LANGUAGES, isLanguageLabel } from "@/lib/language/languages";
 import type { LanguageRoom } from "@/lib/language/types";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/ui/empty-state";
 import { CreateRoomForm } from "./CreateRoomForm";
 import { RoomCard } from "./RoomCard";
 
 type SP = Record<string, string | string[] | undefined>;
 
+/** Mirrors the browser: count + Create button, language chips, then a 2-column card grid. */
 export function RoomBrowserSkeleton() {
   return (
-    <div aria-busy="true" aria-label="Loading rooms" role="status">
-      <div className="mb-6 h-11 w-full max-w-xs animate-pulse rounded-md bg-muted motion-reduce:animate-none" />
+    <div role="status" aria-busy="true" aria-label="Loading rooms">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3"><Skeleton className="h-5 w-32" /><Skeleton className="h-11 w-36" /></div>
+      <div className="mb-6 flex gap-2 overflow-hidden">{["w-28", "w-20", "w-24", "w-20", "w-24"].map((w, i) => <Skeleton key={i} className={`h-11 shrink-0 rounded-full ${w}`} />)}</div>
       <ul className="grid gap-4 sm:grid-cols-2">
-        {[0, 1, 2, 3].map((i) => <li key={i} className="h-40 animate-pulse rounded-lg border border-border bg-muted motion-reduce:animate-none" />)}
+        {[0, 1, 2, 3].map((i) => (
+          <li key={i} className="flex h-44 flex-col rounded-lg border border-border bg-card p-5">
+            <Skeleton className="h-6 w-2/3" /><Skeleton className="mt-2 h-4 w-1/3" /><Skeleton className="mt-3 h-4 w-full" />
+            <div className="mt-auto flex items-end justify-between"><Skeleton className="h-8 w-28" /><Skeleton className="h-11 w-20" /></div>
+          </li>
+        ))}
       </ul>
+      <span className="sr-only">Loading rooms…</span>
     </div>
   );
 }
@@ -62,12 +72,8 @@ export async function RoomBrowser({ category, kind, searchParams }: { category: 
       {error ? (
         <p role="alert" className="rounded-lg border border-border bg-card p-6 text-center text-muted-foreground">Rooms could not be loaded. Refresh to try again.</p>
       ) : rooms.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border p-8 text-center sm:p-12">
-          <Icon className="mx-auto text-muted-foreground" size={28} aria-hidden="true" />
-          <h2 className="mt-3 text-lg">{lang ? `No ${lang} ${label} rooms yet` : `No ${label} rooms yet`}</h2>
-          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">Be the first to start one and invite other learners.</p>
-          <div className="mt-5 flex justify-center"><CreateRoomForm category="languages" kind={kind} defaultLanguage={lang ?? ""} /></div>
-        </div>
+        <EmptyState icon={Icon} title={lang ? `No ${lang} ${label} rooms yet` : `No ${label} rooms yet`}
+          description="Be the first to start one and invite other learners." action={<CreateRoomForm category="languages" kind={kind} defaultLanguage={lang ?? ""} />} />
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2">
           {rooms.map((r) => <li key={r.id} className="min-w-0"><RoomCard room={r} category="languages" isOwn={r.created_by === user.id} /></li>)}

@@ -14,7 +14,7 @@ export default async function LanguagePreferences({ params }: PageProps<"/learn/
   return (
     <>
       <PageHeader title="Language preferences" description="Update what you are learning and how others can find you."
-        crumbs={[{ label: "Language Learning", href: "/learn/languages" }, { label: "Preferences" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning", href: "/learn/languages" }, { label: "Preferences" }]} backHref="/learn/languages" />
       <div className="max-w-2xl rounded-lg border border-border bg-card p-5 sm:p-8">
         <ProfileForm category={category} mode="edit"
           initial={{ target_language: p.target_language, known_languages: p.known_languages, proficiency: p.proficiency, discoverable: p.discoverable }} />

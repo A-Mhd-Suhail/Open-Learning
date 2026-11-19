@@ -5,13 +5,17 @@ export function Skeleton({ className }: { className?: string }) {
   return <div aria-hidden="true" className={cn("ol-skeleton rounded-md", className)} />;
 }
 
-/** Page header placeholder matching PageHeader's spacing. */
+/** Page header placeholder matching PageHeader's spacing (chrome row, title, foil, description). */
 export function PageHeaderSkeleton({ crumbs = true }: { crumbs?: boolean }) {
   return (
-    <div className="mb-6 border-b border-border pb-5 sm:mb-8 sm:pb-6">
-      {crumbs && <Skeleton className="mb-4 h-4 w-48" />}
-      <Skeleton className="h-9 w-2/3 max-w-sm sm:h-10" />
-      <Skeleton className="mt-3 h-4 w-full max-w-md" />
+    <div className="mb-8 sm:mb-10 lg:mb-12" aria-hidden="true">
+      <div className="mb-5 flex min-h-11 items-center gap-4 sm:mb-6">
+        <Skeleton className="h-5 w-16" />
+        {crumbs && <Skeleton className="hidden h-4 w-48 sm:block" />}
+      </div>
+      <Skeleton className="h-9 w-2/3 max-w-sm sm:h-11" />
+      <Skeleton className="mt-5 h-0.5 w-12" />
+      <Skeleton className="mt-4 h-4 w-full max-w-md" />
     </div>
   );
 }

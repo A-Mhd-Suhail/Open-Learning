@@ -16,7 +16,8 @@ const body = Manrope({
 export const metadata: Metadata = {
   title: { default: "Open Learning", template: "%s · Open Learning" },
   description:
-    "Learn anything. Learn together. Videos, study groups and friends for School, JEE and NEET.",
+    "Open Learning connects students to learn, share knowledge and grow together: a free video library for School, JEE and NEET, study groups, friends, and voice and chat rooms.",
+  openGraph: { title: "Open Learning", description: "Connecting Students. Empowering Every Learner.", type: "website", siteName: "Open Learning" },
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };

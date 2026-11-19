@@ -1,11 +1,11 @@
-import { LoadingRegion, PageHeaderSkeleton, RowListSkeleton, Skeleton } from "@/components/ui/skeleton";
+import { LoadingRegion, PageHeaderSkeleton, RowListSkeleton } from "@/components/ui/skeleton";
 
+/** Mirrors the admin hub (header + three ruled rows). Sub-pages have their own table skeletons. */
 export default function Loading() {
   return (
     <LoadingRegion label="Loading admin">
-      <PageHeaderSkeleton crumbs={false} />
-      <div className="mb-6 grid gap-3 sm:grid-cols-3">{[0, 1, 2].map((i) => <Skeleton key={i} className="h-24 rounded-lg" />)}</div>
-      <RowListSkeleton rows={5} />
+      <PageHeaderSkeleton />
+      <RowListSkeleton rows={3} />
     </LoadingRegion>
   );
 }

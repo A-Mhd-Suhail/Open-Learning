@@ -74,6 +74,9 @@
   --color-on-band: var(--on-band);
   --color-band-muted: var(--band-muted);
   --color-gold: var(--gold-text);
+  --radius-md: 0.375rem;
+  --radius-lg: 0.625rem;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -6px rgb(0 0 0 / 0.14);
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-display-face), var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -149,9 +152,10 @@ dialog:not([open]) { display: none; }
 
 /* Loading system: flat shimmer for skeletons, a thin route progress bar, a content fade-in. All CSS, no JS animation. */
 @keyframes ol-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+/* Flat sweep of a slightly lighter band over the muted ground (no gradient colour, a soft highlight only). */
 .ol-skeleton {
   background-color: var(--muted);
-  background-image: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--card) 70%, transparent) 50%, transparent 100%);
+  background-image: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--foreground) 6%, transparent) 50%, transparent 100%);
   background-size: 200% 100%;
   background-repeat: no-repeat;
   animation: ol-shimmer 1.6s linear infinite;
@@ -176,3 +180,30 @@ dialog:not([open]) { display: none; }
 
 @keyframes ol-pop-in { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
 .ol-pop { transform-origin: top right; animation: ol-pop-in 0.16s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ---------- Type scale (see docs/DESIGN_SYSTEM.md) ---------- */
+.t-display { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.5rem, 1.6rem + 4.5vw, 4.5rem); line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
+.t-h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+.t-h2 { font-family: var(--font-display); font-weight: 580; font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2rem); line-height: 1.15; letter-spacing: -0.015em; text-wrap: balance; }
+.t-h3 { font-family: var(--font-display); font-weight: 580; font-size: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem); line-height: 1.3; letter-spacing: -0.01em; }
+.t-body { font-size: 1rem; line-height: 1.6; }
+.t-small { font-size: 0.875rem; line-height: 1.5; }
+.t-eyebrow { font-size: 0.75rem; line-height: 1.2; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-text); }
+.t-measure { max-width: 65ch; }
+
+/* ---------- Layout helpers ---------- */
+.page-container { width: 100%; max-width: 72rem; margin-inline: auto; }
+.section-stack > * + * { margin-top: 3rem; }
+@media (min-width: 1024px) { .section-stack > * + * { margin-top: 4rem; } }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+.pt-safe { padding-top: env(safe-area-inset-top); }
+
+/* Elevation: cards are flat; this is only for floating layers. */
+.shadow-float { box-shadow: var(--shadow-card); }
+
+/* Focus: shared ring for custom controls that opt out of the global outline. */
+.focus-ring:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.band-surface .focus-ring:focus-visible { outline-color: var(--accent); }
+
+/* Rail / tab-bar active marker */
+.nav-active-bar { position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem; width: 3px; border-radius: 0 3px 3px 0; background: var(--accent); }

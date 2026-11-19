@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, Compass, FileText, Headphones, MessageCircle, Settings2, Users } from "lucide-react";
+import { ArrowRight, Clock, Compass, FileText, Headphones, MessageCircle, Settings2, Users } from "lucide-react";
 import { PageHeader } from "@/components/app/PageHeader";
 import { Avatar } from "@/components/ui/avatar";
 import { ButtonLink } from "@/components/ui/button";
@@ -10,27 +10,27 @@ import type { FeedPost, LanguageRoom } from "@/lib/language/types";
 import type { PublicProfile } from "@/lib/groups";
 
 const BASE = "/learn/languages";
-const card = "rounded-lg border border-border bg-card p-5";
+const card = "min-w-0 rounded-lg border border-border bg-card p-5 sm:p-6";
 const fmt = (iso: string) => new Intl.DateTimeFormat("en", { day: "numeric", month: "short" }).format(new Date(iso));
 const monthYear = (iso: string) => new Intl.DateTimeFormat("en", { month: "long", year: "numeric" }).format(new Date(iso));
 
 function Section({ id, icon: Icon, title, href, linkLabel = "View all", children }: { id: string; icon: typeof Users; title: string; href?: string; linkLabel?: string; children: ReactNode }) {
   return (
     <section aria-labelledby={id} className={card}>
-      <div className="flex items-center justify-between gap-3">
-        <h2 id={id} className="flex items-center gap-2 text-base font-bold"><Icon size={18} aria-hidden="true" className="text-primary" />{title}</h2>
-        {href && <Link href={href} className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary hover:underline">{linkLabel}<ArrowRight size={14} aria-hidden="true" /></Link>}
+      <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
+        <h2 id={id} className="flex items-center gap-2.5 font-display text-lg font-semibold"><Icon size={18} aria-hidden="true" className="text-gold" />{title}</h2>
+        {href && <Link href={href} className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-gold hover:underline">{linkLabel}<ArrowRight size={14} aria-hidden="true" /></Link>}
       </div>
-      <div className="mt-2">{children}</div>
+      <div className="mt-1">{children}</div>
     </section>
   );
 }
 
 function Empty({ text, href, cta }: { text: string; href?: string; cta?: string }) {
   return (
-    <div className="py-3 text-sm text-muted-foreground">
+    <div className="py-4 text-sm text-muted-foreground">
       <p>{text}</p>
-      {href && cta && <Link href={href} className="mt-1 inline-flex min-h-11 items-center font-semibold text-primary hover:underline">{cta}</Link>}
+      {href && cta && <Link href={href} className="mt-1 inline-flex min-h-11 items-center font-semibold text-gold hover:underline">{cta}</Link>}
     </div>
   );
 }
@@ -41,7 +41,7 @@ function RoomList({ rooms, kind, empty }: { rooms: LanguageRoom[]; kind: "voice"
     <ul className="divide-y divide-border">
       {rooms.map((r) => (
         <li key={r.id}>
-          <Link href={`${BASE}/friends/${kind}/${r.id}`} className="flex min-h-11 items-center justify-between gap-3 py-2.5 hover:underline">
+          <Link href={`${BASE}/friends/${kind}/${r.id}`} className="flex min-h-11 items-center justify-between gap-3 py-2.5 transition-colors hover:bg-muted/70">
             <span className="min-w-0"><span className="block truncate font-medium">{r.name}</span><span className="block truncate text-xs text-muted-foreground">{r.language ?? "Any language"}</span></span>
             <span className="shrink-0 text-xs text-muted-foreground">{kind === "voice" && r.live_count > 0 ? `${r.live_count} live` : `${r.member_count} member${r.member_count === 1 ? "" : "s"}`}</span>
           </Link>
@@ -94,27 +94,27 @@ export async function LanguageDashboard() {
     <>
       <PageHeader title="Language Learning" description={`Welcome back, ${profile.display_name.split(" ")[0]}.`}
         crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning" }]} />
-      <div className="space-y-5">
-        <section aria-labelledby="overview" className="rounded-lg bg-band p-6 text-on-band sm:p-8">
+      <div className="space-y-6">
+        <section aria-labelledby="overview" className="band-surface rounded-lg border border-accent/40 bg-band p-6 text-on-band sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-band-muted">You are learning</p>
-              <h2 id="overview" className="font-display text-3xl font-bold sm:text-4xl">{lp.target_language}</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">You are learning</p>
+              <h2 id="overview" className="font-display text-3xl font-semibold sm:text-4xl">{lp.target_language}</h2>
               <p className="mt-2 text-sm text-band-muted">
                 {PROFICIENCY_LABEL[lp.proficiency]} level
                 {lp.known_languages.length > 0 && <> · You know {lp.known_languages.join(", ")}</>}
                 <> · Member since {monthYear(lp.created_at)}</>
               </p>
             </div>
-            <Link href={`${BASE}/preferences`} className="inline-flex h-11 items-center gap-2 rounded-md border border-band-muted/50 px-4 text-sm font-semibold hover:bg-white/10"><Settings2 size={16} aria-hidden="true" />Edit preferences</Link>
+            <Link href={`${BASE}/preferences`} className="inline-flex h-11 items-center gap-2 rounded-md border border-band-muted/50 px-4 text-sm font-semibold transition-colors hover:border-accent"><Settings2 size={16} aria-hidden="true" />Edit preferences</Link>
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
             <ButtonLink href={`${BASE}/voice`} variant="accent"><Headphones size={16} aria-hidden="true" />Join a voice room</ButtonLink>
-            <Link href={`${BASE}/community`} className="inline-flex h-11 items-center gap-2 rounded-md border border-band-muted/50 px-5 text-sm font-semibold hover:bg-white/10"><FileText size={16} aria-hidden="true" />Browse community</Link>
+            <Link href={`${BASE}/community`} className="inline-flex h-11 items-center gap-2 rounded-md border border-band-muted/50 px-5 text-sm font-semibold transition-colors hover:border-accent"><FileText size={16} aria-hidden="true" />Browse community</Link>
           </div>
         </section>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           <Section id="voice" icon={Headphones} title="Voice Rooms" href={`${BASE}/voice`}><RoomList rooms={voiceRooms} kind="voice" empty="No voice rooms yet." /></Section>
           <Section id="chat" icon={MessageCircle} title="Chat Rooms" href={`${BASE}/chat`}><RoomList rooms={chatRooms} kind="chat" empty="No chat rooms yet." /></Section>
 
@@ -123,7 +123,7 @@ export async function LanguageDashboard() {
               <ul className="divide-y divide-border">
                 {posts.map((p) => (
                   <li key={p.id}>
-                    <Link href={`${BASE}/community/${p.id}`} className="block py-2.5 hover:underline">
+                    <Link href={`${BASE}/community/${p.id}`} className="block py-2.5 transition-colors hover:bg-muted/70">
                       <span className="block text-xs text-muted-foreground">{nameOf(p.author_id)} · {fmt(p.created_at)}{p.language ? ` · ${p.language}` : ""}</span>
                       <span className="line-clamp-2 text-sm">{p.body || "Photo post"}</span>
                     </Link>
@@ -140,7 +140,7 @@ export async function LanguageDashboard() {
                   const p = byId.get(f.id);
                   return (
                     <li key={f.id}>
-                      <Link href={p ? `${BASE}/friends/my-friends/${p.student_id}` : `${BASE}/friends/my-friends`} className="flex min-h-11 items-center gap-3 py-2 hover:underline">
+                      <Link href={p ? `${BASE}/friends/my-friends/${p.student_id}` : `${BASE}/friends/my-friends`} className="flex min-h-11 items-center gap-3 py-2 transition-colors hover:bg-muted/70">
                         <Avatar name={nameOf(f.id)} size="sm" /><span className="truncate text-sm font-medium">{nameOf(f.id)}</span>
                       </Link>
                     </li>
@@ -159,7 +159,7 @@ export async function LanguageDashboard() {
                   if (!pub) return null;
                   return (
                     <li key={p.user_id}>
-                      <Link href={`${BASE}/friends/my-friends/${pub.student_id}`} className="flex min-h-11 items-center gap-3 py-2 hover:underline">
+                      <Link href={`${BASE}/friends/my-friends/${pub.student_id}`} className="flex min-h-11 items-center gap-3 py-2 transition-colors hover:bg-muted/70">
                         <Avatar name={pub.display_name} size="sm" />
                         <span className="min-w-0"><span className="block truncate text-sm font-medium">{pub.display_name}</span>
                           <span className="block truncate text-xs text-muted-foreground">Learning {p.target_language} · {PROFICIENCY_LABEL[p.proficiency as keyof typeof PROFICIENCY_LABEL] ?? p.proficiency}</span></span>
@@ -171,11 +171,11 @@ export async function LanguageDashboard() {
             )}
           </Section>
 
-          <Section id="activity" icon={ArrowRight} title="Recent activity">
+          <Section id="activity" icon={Clock} title="Recent activity">
             {activity.length === 0 ? <Empty text="Your activity will show up here once you join a room, post or add a friend." /> : (
               <ul className="divide-y divide-border">
                 {activity.map((a, i) => (
-                  <li key={i}><Link href={a.href} className="flex min-h-11 items-center justify-between gap-3 py-2 text-sm hover:underline"><span className="min-w-0 truncate">{a.text}</span><span className="shrink-0 text-xs text-muted-foreground">{fmt(a.at)}</span></Link></li>
+                  <li key={i}><Link href={a.href} className="flex min-h-11 items-center justify-between gap-3 py-2 text-sm transition-colors hover:bg-muted/70"><span className="min-w-0 truncate">{a.text}</span><span className="shrink-0 text-xs text-muted-foreground">{fmt(a.at)}</span></Link></li>
                 ))}
               </ul>
             )}

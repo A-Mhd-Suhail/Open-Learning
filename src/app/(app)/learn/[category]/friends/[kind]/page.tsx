@@ -14,7 +14,7 @@ export default async function KindHome({ params }: PageProps<"/learn/[category]/
   return (
     <>
       <PageHeader title={k.title} description={k.blurb}
-        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: k.title }]} backHref={`/learn/${category}/friends`} />
       <RowList>
         <li><RowLink icon={Plus} title="Create Group" description="Start a public or private group and invite others." href={`${base}/create`} /></li>
         <li><RowLink icon={FolderOpen} title="Existing Groups" description="Groups you have already joined." href={`${base}/mine`} /></li>

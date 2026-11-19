@@ -16,7 +16,7 @@ export default async function ChatRoomsPage({ params, searchParams }: PageProps<
   return (
     <>
       <PageHeader title="Chat rooms" description="Practise writing with other learners. Join a public room or start your own."
-        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning", href: "/learn/languages" }, { label: "Chat rooms" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning", href: `/learn/${category}` }, { label: "Chat rooms" }]} backHref={`/learn/${category}`} />
       <Suspense fallback={<RoomBrowserSkeleton />}>
         <RoomBrowser category="languages" kind="chat" searchParams={sp} />
       </Suspense>

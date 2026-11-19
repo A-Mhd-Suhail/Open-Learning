@@ -21,14 +21,14 @@ export default async function AdminVideos({ searchParams }: PageProps<"/admin/vi
   const pages = Math.max(1, Math.ceil((count ?? 0) / PAGE));
   return (
     <>
-      <PageHeader title="Videos" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos" }]} />
+      <PageHeader title="Videos" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos" }]} backHref="/admin" />
       <div className="space-y-8">
         <VideoImporter />
         <section aria-labelledby="all">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <h2 id="all" className="text-lg font-bold">All videos ({count ?? 0})</h2>
             <div className="flex w-full flex-wrap gap-2 sm:w-auto">
-              <form role="search" className="flex min-w-0 flex-1 gap-2 sm:flex-none"><label htmlFor="q" className="sr-only">Search videos</label><input id="q" name="q" defaultValue={q} placeholder="Search title, ID, chapter" className="h-11 w-full min-w-0 rounded-md border border-border bg-card px-3 text-sm sm:w-64" /></form>
+              <form role="search" className="flex min-w-0 flex-1 gap-2 sm:flex-none"><label htmlFor="q" className="sr-only">Search videos</label><input id="q" name="q" defaultValue={q} placeholder="Search title, ID, chapter" className="h-11 w-full min-w-0 rounded-md border border-border bg-card px-3 text-base sm:w-64 sm:text-sm" /></form>
               <Link href="/admin/videos/new" className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover"><Plus size={16} aria-hidden="true" />Add video</Link>
             </div>
           </div>

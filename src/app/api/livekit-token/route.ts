@@ -25,9 +25,12 @@ export async function POST(req: Request) {
 
   let room: string;
   if ("groupId" in parsed.data) {
-    const { data: g } = await s.supabase.from("groups").select("id, type").eq("id", parsed.data.groupId).maybeSingle();
+    // Independent lookups: run together (one round trip instead of two).
+    const [{ data: g }, { data: m }] = await Promise.all([
+      s.supabase.from("groups").select("id, type").eq("id", parsed.data.groupId).maybeSingle(),
+      s.supabase.from("group_members").select("user_id").eq("group_id", parsed.data.groupId).eq("user_id", s.user.id).maybeSingle(),
+    ]);
     if (!g || g.type !== "voice") return NextResponse.json({ error: "Voice room not found" }, { status: 404 });
-    const { data: m } = await s.supabase.from("group_members").select("user_id").eq("group_id", g.id).eq("user_id", s.user.id).maybeSingle();
     if (!m) return NextResponse.json({ error: "Join this room before connecting" }, { status: 403 });
     // Capacity is enforced in the database (also records presence/heartbeat). Runs as the caller, never the service role.
     const { error: joinErr } = await s.supabase.rpc("voice_join", { p_group: g.id });

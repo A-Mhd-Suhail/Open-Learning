@@ -13,5 +13,5 @@ export default async function EditVideo({ params }: PageProps<"/admin/videos/[id
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
   const { data } = await supabase.from("videos").select("*").eq("id", id).single<Video>();
   if (!data) notFound();
-  return (<><PageHeader title="Edit video" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos", href: "/admin/videos" }, { label: data.video_id }]} /><VideoForm video={data} /></>);
+  return (<><PageHeader title="Edit video" crumbs={[{ label: "Admin", href: "/admin" }, { label: "Videos", href: "/admin/videos" }, { label: data.video_id }]} backHref="/admin/videos" /><VideoForm video={data} /></>);
 }
