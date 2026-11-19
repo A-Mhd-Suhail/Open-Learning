@@ -14,7 +14,7 @@ export default async function CategoryDashboard({ params }: PageProps<"/learn/[c
   return (
     <>
       <PageHeader title={`${info.name} learning`} description={info.tagline}
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: info.name }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name }]} />
       <div className="grid gap-5 md:grid-cols-2">
         <PanelLink icon={BookOpen} title="Self Learning" href={`/learn/${category}/self-learning`} items={["Videos", "Question papers", "Tests"]} />
         <PanelLink icon={Users} title="Learn With Friends" href={`/learn/${category}/friends`} items={["Group discussion, chat and voice", "Friends", "Games"]} />

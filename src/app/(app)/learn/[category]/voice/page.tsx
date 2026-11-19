@@ -15,7 +15,7 @@ export default async function VoiceRoomsPage({ params }: { params: Promise<{ cat
   return (
     <>
       <PageHeader title="Voice rooms" description="Practise speaking live with other learners. Join a public room or create your own."
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Voice rooms" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Voice rooms" }]} />
       <RoomBrowser category="languages" kind="voice" />
     </>
   );

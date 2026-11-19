@@ -1,22 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link, { useLinkStatus } from "next/link";
-import { NavProgress } from "@/components/app/NavProgress";
 import { usePathname } from "next/navigation";
 import { GraduationCap, LayoutDashboard, LogOut, Menu, Shield, User, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavProgress } from "@/components/app/NavProgress";
+import { AccountMenu } from "@/components/app/AccountMenu";
 import { PendingButton } from "@/components/ui/pending-button";
 import { cn } from "@/lib/utils";
 
 /** Small spinner shown inside a nav link while its route is loading (must render inside <Link>). */
 function PendingDot() {
   const { pending } = useLinkStatus();
-  return pending ? <span aria-hidden="true" className="ol-spinner ml-auto h-3.5 w-3.5 rounded-full border-2 border-current border-t-transparent" /> : null;
+  return pending ? <span aria-hidden="true" className="ol-spinner ml-1 inline-block h-3 w-3 rounded-full border-2 border-current border-t-transparent" /> : null;
 }
 
 type Props = { name: string; studentId: string; isAdmin: boolean; signOut: () => Promise<void> };
 
+/** Signed-in frame: a black header with the wordmark, primary navigation and the account menu; content below. */
 export function AppShell({ name, studentId, isAdmin, signOut, children }: Props & { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -30,62 +31,52 @@ export function AppShell({ name, studentId, isAdmin, signOut, children }: Props 
   }, [open]);
   const items = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/learn", label: "Start Learning", icon: GraduationCap },
+    { href: "/learn", label: "Learn", icon: GraduationCap },
     { href: "/profile", label: "Profile", icon: User },
     ...(isAdmin ? [{ href: "/admin", label: "Admin", icon: Shield }] : []),
   ];
-  const nav = (
-    <nav aria-label="Primary" className="flex flex-col gap-1">
-      {items.map((it) => {
-        const active = pathname === it.href || pathname.startsWith(it.href + "/");
-        return (
-          <Link key={it.href} href={it.href} onClick={() => setOpen(false)} aria-current={active ? "page" : undefined}
-            className={cn("flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors",
-              active ? "bg-accent text-on-accent" : "text-band-muted hover:bg-white/10 hover:text-on-band")}>
-            <it.icon size={18} strokeWidth={1.9} aria-hidden="true" /> {it.label}
-            <PendingDot />
-          </Link>
-        );
-      })}
-    </nav>
-  );
-  const footer = (
-    <div className="mt-auto border-t border-white/15 pt-4">
-      <div className="px-3">
-        <p className="truncate text-sm font-semibold text-on-band" title={name}>{name}</p>
-        <p className="num mt-0.5 font-mono text-xs text-band-muted">{studentId}</p>
-      </div>
-      <div className="mt-3 flex items-center gap-1">
-        <form action={signOut} className="flex-1">
-          <PendingButton className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-md px-3 text-sm font-medium text-band-muted hover:bg-white/10 hover:text-on-band" pendingText="Signing out…"><LogOut size={16} aria-hidden="true" />Sign out</PendingButton>
-        </form>
-        <ThemeToggle className="text-band-muted hover:bg-white/10 hover:text-on-band" />
-      </div>
-    </div>
-  );
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[248px_1fr]">
+    <div className="min-h-dvh">
       <NavProgress />
-      <aside className="band-surface sticky top-0 hidden h-dvh flex-col gap-8 bg-band p-4 lg:flex">
-        <Logo href="/dashboard" inverse className="px-2 pt-2" />
-        {nav}
-        {footer}
-      </aside>
-      <div className="band-surface lg:hidden">
-        <div className="sticky top-0 z-30 flex min-h-14 items-center justify-between bg-band pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)]">
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent">Skip to content</a>
+      <header className="band-surface sticky top-0 z-40 border-b border-accent/30 bg-band pt-[env(safe-area-inset-top)]">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6">
           <Logo href="/dashboard" inverse />
-          <button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-nav"
-            onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-on-band hover:bg-white/10">
-            {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-          </button>
+          <nav aria-label="Primary" className="hidden h-full items-stretch gap-1 md:flex">
+            {items.map((it) => (
+              <Link key={it.href} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}
+                className={cn("relative inline-flex items-center gap-2 px-4 text-sm font-semibold transition-colors",
+                  isActive(it.href) ? "text-on-band after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:bg-accent" : "text-band-muted hover:text-on-band")}>
+                {it.label}<PendingDot />
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center gap-1">
+            <AccountMenu name={name} studentId={studentId} signOut={signOut} />
+            <button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen((v) => !v)}
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-on-band hover:bg-white/10 md:hidden">
+              {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            </button>
+          </div>
         </div>
         {open && (
-          <div id="mobile-nav" className="fixed inset-x-0 bottom-0 top-[calc(3.5rem+env(safe-area-inset-top))] z-20 flex flex-col gap-6 overflow-y-auto overscroll-contain bg-band pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
-            {nav}{footer}
+          <div id="mobile-nav" className="ol-fade-in fixed inset-x-0 bottom-0 top-[calc(4rem+env(safe-area-inset-top))] z-30 flex flex-col overflow-y-auto overscroll-contain bg-band px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 md:hidden">
+            <nav aria-label="Primary" className="flex flex-col">
+              {items.map((it) => (
+                <Link key={it.href} href={it.href} onClick={() => setOpen(false)} aria-current={isActive(it.href) ? "page" : undefined}
+                  className={cn("flex h-14 items-center gap-4 border-b border-white/10 font-display text-xl", isActive(it.href) ? "text-accent" : "text-on-band")}>
+                  <it.icon size={20} strokeWidth={1.7} aria-hidden="true" />{it.label}
+                </Link>
+              ))}
+            </nav>
+            <form action={signOut} className="mt-auto pt-6">
+              <PendingButton pendingText="Signing out…" className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-white/20 text-sm font-semibold text-on-band hover:border-accent"><LogOut size={16} aria-hidden="true" />Sign out</PendingButton>
+            </form>
           </div>
         )}
-      </div>
-      <main id="main" className="mx-auto w-full min-w-0 max-w-5xl px-4 py-6 pb-[max(2rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:py-8 lg:px-10 lg:py-12">{children}</main>
+      </header>
+      <main id="main" className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 pb-[max(3rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:py-12">{children}</main>
     </div>
   );
 }

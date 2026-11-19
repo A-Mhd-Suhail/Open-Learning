@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Public_Sans } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
+const display = Bodoni_Moda({
   variable: "--font-display-face",
   subsets: ["latin"],
   display: "swap",
 });
-const body = Public_Sans({
+const body = Manrope({
   variable: "--font-body-face",
   subsets: ["latin"],
   display: "swap",

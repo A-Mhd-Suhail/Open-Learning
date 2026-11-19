@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 // Signed-in journeys. Skipped unless e2e/.auth/state.json exists (a test account's saved session; never commit it).
 test.skip(!existsSync("e2e/.auth/state.json"), "no saved test session");
 
-const ROUTES = ["/dashboard", "/learn", "/learn/school", "/learn/school/self-learning/videos", "/learn/school/friends", "/learn/school/community", "/profile"];
+const ROUTES = ["/learn/languages", "/dashboard", "/learn", "/learn/school", "/learn/school/self-learning/videos", "/learn/school/friends", "/learn/school/community", "/profile"];
 
 for (const route of ROUTES) {
   test(`${route} loads, no overflow, no console errors`, async ({ page }) => {
@@ -31,6 +31,28 @@ test("video search narrows results and can be cleared", async ({ page }) => {
 test("sidebar navigation moves between pages", async ({ page, isMobile }) => {
   await page.goto("/dashboard");
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
-  await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Profile" }).click();
+  await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Profile" }).first().click();
   await expect(page).toHaveURL(/\/profile/);
+});
+
+test("back button returns to the parent page", async ({ page }) => {
+  await page.goto("/learn/school");
+  await page.getByRole("link", { name: /Back to Learn/ }).click();
+  await expect(page).toHaveURL(/\/learn$/);
+});
+
+test("account menu shows the Student ID and a sign out action", async ({ page }) => {
+  await page.goto("/dashboard");
+  await page.getByRole("button", { name: /^[A-Za-z]/ }).filter({ has: page.locator("[aria-hidden]") }).first().click();
+  await expect(page.getByText(/OL-\d{4}-\d{6}/).first()).toBeVisible();
+  await expect(page.getByRole("button", { name: "Sign out" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Sign out" })).toBeHidden();
+});
+
+test("Language Learning is listed like every other path", async ({ page }) => {
+  await page.goto("/learn");
+  const rows = page.getByRole("list").getByRole("listitem");
+  await expect(rows.filter({ hasText: "Language Learning" })).toHaveCount(1);
+  await expect(rows.filter({ hasText: "School" }).first()).toBeVisible();
 });

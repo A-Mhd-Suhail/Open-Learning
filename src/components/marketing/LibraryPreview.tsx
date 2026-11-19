@@ -12,7 +12,7 @@ const ROWS = [
 export function LibraryPreview() {
   return (
     <figure className="m-0">
-      <div className="overflow-hidden rounded-lg border border-border bg-card" role="img" aria-label="Preview of the Open Learning video library with search, filters and lesson rows">
+      <div className="overflow-hidden rounded-xl border border-white/15 bg-card" role="img" aria-label="Preview of the Open Learning video library with search, filters and lesson rows">
         <div aria-hidden="true">
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
             <Search size={16} className="text-muted-foreground" />
@@ -20,24 +20,24 @@ export function LibraryPreview() {
           </div>
           <div className="flex flex-wrap gap-2 border-b border-border bg-muted/50 px-4 py-3 text-xs font-semibold">
             {["Class 11", "Physics", "All chapters", "English"].map((f, i) => (
-              <span key={f} className={i < 2 ? "rounded border border-primary bg-card px-2.5 py-1 text-primary" : "rounded border border-border bg-card px-2.5 py-1 text-muted-foreground"}>{f}</span>
+              <span key={f} className={i < 2 ? "rounded-full border border-accent bg-accent/10 px-3 py-1 text-accent" : "rounded-full border border-border px-3 py-1 text-muted-foreground"}>{f}</span>
             ))}
           </div>
           <ul>
             {ROWS.map((r, i) => (
               <li key={r.t} style={{ "--i": i + 2 } as React.CSSProperties} className="rise flex items-center gap-4 border-b border-border px-4 py-3.5 last:border-0">
-                <span className="flex h-9 w-14 shrink-0 items-center justify-center rounded bg-band text-on-band"><Play size={14} fill="currentColor" /></span>
+                <span className="flex h-9 w-14 shrink-0 items-center justify-center rounded bg-muted text-accent"><Play size={14} fill="currentColor" /></span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-semibold">{r.t}</span>
                   <span className="mt-0.5 block text-xs text-muted-foreground">{r.s} · {r.c} · {r.e}</span>
                 </span>
-                <span className="hidden text-xs font-semibold text-primary sm:block">Watch</span>
+                <span className="hidden text-xs font-semibold text-accent sm:block">Watch</span>
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <figcaption className="mt-3 text-xs text-muted-foreground">Sample lessons shown for illustration. Your library is filled by the Open Learning team.</figcaption>
+      <figcaption className="mt-3 text-xs text-band-muted">Sample lessons shown for illustration. Your library is filled by the Open Learning team.</figcaption>
     </figure>
   );
 }

@@ -9,18 +9,19 @@ const ITEMS = [
 
 export function TogetherSection() {
   return (
-    <section id="together" className="scroll-mt-16 border-t border-border bg-card">
-      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <section id="together" className="scroll-mt-16 border-t border-border">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div>
-          <h2 className="text-3xl sm:text-4xl">Hard chapters are easier with someone to ask</h2>
-          <p className="mt-4 max-w-sm text-muted-foreground">Everything stays inside your category, so School students talk to School students and JEE to JEE.</p>
+          <h2 className="text-4xl sm:text-5xl">Hard chapters are easier with someone to ask</h2>
+          <div className="foil mt-6" aria-hidden="true" />
+          <p className="mt-5 max-w-sm text-muted-foreground">Everything stays inside your category, so School students talk to School students and JEE to JEE.</p>
         </div>
-        <ul className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
+        <ul className="grid gap-x-10 gap-y-2 sm:grid-cols-2">
           {ITEMS.map((it) => (
-            <li key={it.title} className="bg-card p-6">
-              <it.icon className="text-primary" size={22} strokeWidth={1.7} aria-hidden="true" />
-              <h3 className="mt-4 font-display text-lg font-semibold">{it.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{it.body}</p>
+            <li key={it.title} className="border-t border-border py-7">
+              <it.icon className="text-gold" size={24} strokeWidth={1.7} aria-hidden="true" />
+              <h3 className="mt-5 font-display text-2xl font-semibold">{it.title}</h3>
+              <p className="mt-2 text-muted-foreground">{it.body}</p>
             </li>
           ))}
         </ul>

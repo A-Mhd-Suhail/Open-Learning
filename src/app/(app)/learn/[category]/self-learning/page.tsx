@@ -13,7 +13,7 @@ export default async function SelfLearning({ params }: PageProps<"/learn/[catego
   return (
     <>
       <PageHeader title="Self Learning" description="Learn at your own pace."
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Self Learning" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Self Learning" }]} />
       <RowList>
         <li><RowLink icon={PlayCircle} title="Videos" description="Browse and filter lessons by class, subject, chapter and topic." href={`${base}/videos`} /></li>
         <li><RowLink icon={FileText} title="Question Papers" description="Previous year and practice papers." href={`${base}/papers`} badge="Coming soon" /></li>

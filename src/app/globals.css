@@ -7,47 +7,50 @@
  * No gradients, no glow, no tinted shadows.
  */
 :root {
-  --background: #f3f5f7;
-  --foreground: #0c1a2b;
+  /* Black, white and gold. Gold is foil: used on rules, the active state, the Student ID and the single call to action. */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
   --card: #ffffff;
-  --card-foreground: #0c1a2b;
-  --primary: #0f3d6e;
-  --primary-hover: #0a2f57;
+  --card-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-hover: #2a2a2a;
   --on-primary: #ffffff;
-  --secondary: #2f6db0;
-  --accent: #ffd23f;
-  --on-accent: #0c1a2b;
-  --muted: #e8ecf1;
-  --muted-foreground: #4f5e6e;
-  --border: #d5dbe3;
+  --secondary: #7a5a0f;
+  --accent: #d4af37;
+  --on-accent: #0a0a0a;
+  --muted: #f3f3f2;
+  --muted-foreground: #595959;
+  --border: #e4e4e2;
   --destructive: #b3261e;
   --success: #1b7a47;
-  --ring: #0f3d6e;
-  --band: #0b2a4a;
-  --on-band: #f2f6fa;
-  --band-muted: #a9bbd0;
+  --ring: #7a5a0f;
+  --band: #0a0a0a;
+  --on-band: #ffffff;
+  --band-muted: #a8a8a8;
+  --gold-text: #7a5a0f;
 }
 
 :root[data-theme="dark"] {
-  --background: #09121c;
-  --foreground: #e9eef4;
-  --card: #101c2a;
-  --card-foreground: #e9eef4;
-  --primary: #7db2ec;
-  --primary-hover: #a3c8f2;
-  --on-primary: #08131f;
-  --secondary: #5d95d0;
-  --accent: #ffd23f;
-  --on-accent: #0c1a2b;
-  --muted: #172638;
-  --muted-foreground: #9baabb;
-  --border: #223347;
+  --background: #0a0a0a;
+  --foreground: #f5f5f4;
+  --card: #141414;
+  --card-foreground: #f5f5f4;
+  --primary: #d4af37;
+  --primary-hover: #e6c35a;
+  --on-primary: #0a0a0a;
+  --secondary: #d4af37;
+  --accent: #d4af37;
+  --on-accent: #0a0a0a;
+  --muted: #1c1c1c;
+  --muted-foreground: #a3a3a3;
+  --border: #2b2b2b;
   --destructive: #f28b82;
   --success: #5cc98a;
-  --ring: #7db2ec;
-  --band: #0f2238;
-  --on-band: #f2f6fa;
-  --band-muted: #9bb0c7;
+  --ring: #d4af37;
+  --band: #000000;
+  --on-band: #ffffff;
+  --band-muted: #a8a8a8;
+  --gold-text: #d4af37;
 }
 
 @theme inline {
@@ -70,6 +73,7 @@
   --color-band: var(--band);
   --color-on-band: var(--on-band);
   --color-band-muted: var(--band-muted);
+  --color-gold: var(--gold-text);
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-display-face), var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -88,9 +92,13 @@ body {
   line-height: 1.55;
   font-feature-settings: "tnum" 0;
 }
-h1, h2 { font-family: var(--font-display); letter-spacing: -0.022em; text-wrap: balance; }
-h1 { font-weight: 650; }
-h2 { font-weight: 620; }
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.015em; text-wrap: balance; }
+h1 { font-weight: 600; }
+h2 { font-weight: 560; }
+.font-display { letter-spacing: -0.005em; }
+/* Gold foil rule: the one decorative device. A short thick bar under headings, a hairline between sections. */
+.foil { height: 2px; width: 3rem; background: var(--accent); }
+.foil-line { height: 1px; background: color-mix(in srgb, var(--accent) 55%, transparent); }
 p { text-wrap: pretty; }
 
 /* Browser surfaces themed from the palette */
@@ -98,6 +106,12 @@ p { text-wrap: pretty; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
 /* Focus ring on the navy band needs the highlighter colour to stay visible. */
 .band-surface :focus-visible { outline-color: var(--accent); }
+/* Everything inside a black region re-reads the tokens as the dark set, so any component works there unchanged. */
+.band-surface {
+  --foreground: #ffffff; --card: #141414; --card-foreground: #ffffff; --muted: #1f1f1f;
+  --muted-foreground: #a8a8a8; --border: #2e2e2e; --gold-text: #d4af37; --destructive: #f28b82; --success: #5cc98a;
+  color: var(--on-band);
+}
 a { text-underline-offset: 3px; }
 input, select, textarea { color: var(--foreground); caret-color: var(--primary); accent-color: var(--primary); }
 input::placeholder, textarea::placeholder { color: var(--muted-foreground); opacity: 0.8; }
@@ -159,3 +173,6 @@ dialog:not([open]) { display: none; }
     transition-duration: 0.01ms !important;
   }
 }
+
+@keyframes ol-pop-in { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
+.ol-pop { transform-origin: top right; animation: ol-pop-in 0.16s cubic-bezier(0.16, 1, 0.3, 1); }

@@ -93,7 +93,7 @@ export async function LanguageDashboard() {
   return (
     <>
       <PageHeader title="Language Learning" description={`Welcome back, ${profile.display_name.split(" ")[0]}.`}
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: "Language Learning" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: "Language Learning" }]} />
       <div className="space-y-5">
         <section aria-labelledby="overview" className="rounded-lg bg-band p-6 text-on-band sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">

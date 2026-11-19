@@ -12,7 +12,7 @@ export default async function GamesPage({ params }: PageProps<"/learn/[category]
   return (
     <>
       <PageHeader title="Games" description="Multiplayer learning games are in development. None are playable yet."
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: "Games" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: `/learn/${category}/friends` }, { label: "Games" }]} />
       <RowList>
         <li><RowLink icon={Swords} title="Quiz Duel" description="Head-to-head quick questions with a friend." badge="In development" /></li>
         <li><RowLink icon={Timer} title="Speed Round" description="Race the clock with your study group." badge="In development" /></li>

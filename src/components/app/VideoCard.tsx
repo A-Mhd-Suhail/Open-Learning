@@ -14,7 +14,7 @@ export function VideoCard({ video }: { video: Video }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={thumb} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none" />
         )}
-        <span className="absolute bottom-2 left-2 inline-flex h-8 w-8 items-center justify-center rounded bg-band text-on-band"><Play size={13} fill="currentColor" aria-hidden="true" /></span>
+        <span className="absolute bottom-2 left-2 inline-flex h-8 w-8 items-center justify-center rounded bg-band text-accent"><Play size={13} fill="currentColor" aria-hidden="true" /></span>
       </a>
       <div className="flex flex-1 flex-col pt-3">
         <p className="num text-xs font-semibold text-muted-foreground">{meta.join("  ·  ")}</p>

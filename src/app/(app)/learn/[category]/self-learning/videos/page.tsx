@@ -18,7 +18,7 @@ export default async function VideosPage({ params }: PageProps<"/learn/[category
   return (
     <>
       <PageHeader title="Video library" description={`${info.name} lessons from the Open Learning library.`}
-        crumbs={[{ label: "Start Learning", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Self Learning", href: `/learn/${category}/self-learning` }, { label: "Videos" }]} />
+        crumbs={[{ label: "Learn", href: "/learn" }, { label: info.name, href: `/learn/${category}` }, { label: "Self Learning", href: `/learn/${category}/self-learning` }, { label: "Videos" }]} />
       <nav aria-label="Exam" className="mb-5 flex flex-wrap items-center gap-2">
         <span className="text-sm font-semibold text-muted-foreground">Exam</span>
         {ACTIVE_CATEGORIES.map((c) => (
