@@ -133,7 +133,7 @@ export async function LanguageDashboard() {
             )}
           </Section>
 
-          <Section id="friends" icon={Users} title="My friends" href={`${BASE}/friends/my-friends`}>
+          <Section id="friends" icon={Users} title="Friends" href={`${BASE}/friends/my-friends`}>
             {friendRows.length === 0 ? <Empty text="You have not added any friends yet." href={`${BASE}/friends/my-friends`} cta="Find students" /> : (
               <ul className="divide-y divide-border">
                 {friendRows.slice(0, 4).map((f) => {

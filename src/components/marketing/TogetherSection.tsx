@@ -3,7 +3,7 @@ import { Gamepad2, MessageSquare, Mic, UserPlus } from "lucide-react";
 const ITEMS = [
   { icon: MessageSquare, title: "Group discussion and chat", body: "Real-time rooms for every category, plus private groups you create and share by invite link." },
   { icon: Mic, title: "Group voice", body: "Talk problems through live in a voice room, with your microphone only on while you are connected." },
-  { icon: UserPlus, title: "My friends", body: "Find classmates by Student ID, send a request, and call each other once you are friends." },
+  { icon: UserPlus, title: "Friends", body: "Find classmates by Student ID, send a request, and call each other once you are friends." },
   { icon: Gamepad2, title: "Games", body: "Multiplayer learning games are in development. They are labelled so you know what is live." },
 ];
 

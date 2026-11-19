@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { requireSession } from "@/lib/auth";
 import { ACTIVE_CATEGORIES, getCategory } from "@/lib/categories";
 import { CATEGORY_TO_EXAM } from "@/lib/videos/types";
-import { loadAllVideos } from "@/lib/videos/load";
+import { loadVideosCached } from "@/lib/videos/cached";
 import { VideoLibrary } from "./VideoLibrary";
 
 export const metadata: Metadata = { title: "Videos" };
@@ -12,9 +12,9 @@ export const metadata: Metadata = { title: "Videos" };
 export default async function VideosPage({ params }: PageProps<"/learn/[category]/self-learning/videos">) {
   const { category } = await params;
   const info = getCategory(category)!;
-  const { supabase } = await requireSession();
+  await requireSession(); // auth gate first; the catalogue itself is shared, cached data
   const exam = CATEGORY_TO_EXAM[category];
-  const { videos, error } = await loadAllVideos(supabase, exam);
+  const { videos, error } = await loadVideosCached(exam);
   return (
     <>
       <PageHeader title="Video library" description={`${info.name} lessons from the Open Learning library.`}

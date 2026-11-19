@@ -12,10 +12,16 @@ export const getSession = cache(async () => {
   if (!supabaseConfigured()) return null;
   await connection(); // session is request-time data; keeps token-expiry clock reads out of prerender
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser(); // verifies with Supabase, not just the cookie
-  if (!user) return null;
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single<Profile>();
-  if (!profile) return null;
+  // The signature-checked claims give the user id locally (no network), so the profile query can run at the same
+  // time as the server-side user verification instead of after it: one database round trip saved on every request.
+  const { data: claims } = await supabase.auth.getClaims();
+  const uid = claims?.claims?.sub;
+  if (!uid) return null;
+  const [{ data: { user } }, { data: profile }] = await Promise.all([
+    supabase.auth.getUser(), // still verifies with Supabase, not just the cookie
+    supabase.from("profiles").select("*").eq("id", uid).single<Profile>(),
+  ]);
+  if (!user || user.id !== uid || !profile) return null;
   return { user, profile, supabase };
 });
 

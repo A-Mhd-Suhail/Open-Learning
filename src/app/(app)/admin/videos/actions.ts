@@ -1,5 +1,6 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
+import { VIDEOS_TAG } from "@/lib/videos/cached";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { toDbRow, validateRows, type RawRow } from "@/lib/videos/validate";
@@ -21,7 +22,7 @@ export async function saveVideo(_prev: FormState, fd: FormData): Promise<FormSta
   const q = id ? supabase.from("videos").update({ ...v, updated_at: new Date().toISOString() }).eq("id", id) : supabase.from("videos").insert(v);
   const { error } = await q;
   if (error) return { error: error.code === "23505" ? "A video with this Video ID already exists." : "Could not save the video." };
-  revalidatePath("/admin/videos"); revalidatePath("/learn", "layout");
+  updateTag(VIDEOS_TAG); revalidatePath("/admin/videos"); revalidatePath("/learn", "layout");
   redirect("/admin/videos");
 }
 
@@ -30,5 +31,5 @@ export async function deleteVideo(fd: FormData) {
   const id = String(fd.get("id") ?? "");
   if (!/^[0-9a-f-]{36}$/.test(id)) return;
   await supabase.from("videos").delete().eq("id", id);
-  revalidatePath("/admin/videos"); revalidatePath("/learn", "layout");
+  updateTag(VIDEOS_TAG); revalidatePath("/admin/videos"); revalidatePath("/learn", "layout");
 }

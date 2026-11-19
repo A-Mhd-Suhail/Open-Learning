@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { cloneElement, isValidElement } from "react";
 
-/** Marks the call ended in the database when the student leaves, then returns to My Friends. */
+/** Marks the call ended in the database when the student leaves, then returns to Friends. */
 export function CallEnder({ callId, category, children }: { callId: string; category: string; children: React.ReactElement<{ onLeave?: () => void }> }) {
   const router = useRouter();
   const onLeave = async () => {

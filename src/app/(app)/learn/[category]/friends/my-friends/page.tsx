@@ -8,7 +8,7 @@ import type { PublicProfile } from "@/lib/groups";
 import { livekitConfigured } from "@/lib/config";
 import { removeFriendAction, respondFriendRequestAction, sendFriendRequestAction, startCallAction } from "../actions";
 
-export const metadata: Metadata = { title: "My Friends" };
+export const metadata: Metadata = { title: "Friends" };
 
 const btn = "inline-flex h-11 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-sm font-semibold";
 
@@ -44,7 +44,7 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
 
   return (
     <>
-      <PageHeader title="My Friends" crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: base }, { label: "My Friends" }]} />
+      <PageHeader title="Friends" crumbs={[{ label: info.name, href: `/learn/${category}` }, { label: "Learn With Friends", href: base }, { label: "Friends" }]} />
       <div className="space-y-8">
         <section className={card} aria-labelledby="find">
           <h2 id="find" className="font-bold">Find students</h2>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { VIDEOS_TAG } from "@/lib/videos/cached";
 import { adminOrResponse } from "@/lib/auth-api";
 import { analyse, loadSource, sameOrigin } from "@/lib/videos/import";
 import { toDbRow } from "@/lib/videos/validate";
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
       created_count: created, updated_count: updated, skipped_count: r.issues.length, errors: r.issues.slice(0, 200),
     }).select("id").single();
     if (reportError) console.error("import report not saved", reportError.message);
-    revalidatePath("/learn", "layout");
+    revalidateTag(VIDEOS_TAG, { expire: 0 }); revalidatePath("/learn", "layout");
     return NextResponse.json({ reportId: report?.id ?? null, totalRows: r.totalRows, created, updated, skipped: r.issues.length, issues: r.issues.slice(0, 500) });
   } catch (e) {
     if (e instanceof ImportInputError) return NextResponse.json({ error: e.message }, { status: 400 });
