@@ -1,4 +1,4 @@
-# Open Learning
+# Open Learning 
 
 Learn anything. Learn together. Grow together. Next.js 16 + Supabase + LiveKit. School, JEE, NEET and Language Learning (preferences, voice/chat rooms, community posts and stories).
 
