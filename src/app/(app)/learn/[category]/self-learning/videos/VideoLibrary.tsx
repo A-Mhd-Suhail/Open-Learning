@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { Search, SearchX, X } from "lucide-react";
 import type { Video } from "@/lib/videos/types";
 import { allOptions, applyFilters, changeFilter, EMPTY_FILTERS, hasActiveFilters, optionsFor, type Filters, type SortKey } from "@/lib/videos/filter";
@@ -17,7 +17,9 @@ export function VideoLibrary({ videos, examLabel }: { videos: Video[]; examLabel
   const [sort, setSort] = useState<SortKey>("newest");
   const [shown, setShown] = useState(PAGE);
 
-  const results = useMemo(() => applyFilters(videos, f, sort), [videos, f, sort]);
+  // Typing stays responsive on large catalogues: input updates immediately, the filtered grid follows at low priority.
+  const df = useDeferredValue(f);
+  const results = useMemo(() => applyFilters(videos, df, sort), [videos, df, sort]);
   const options = useMemo(() => allOptions(videos, f), [videos, f]);
   // JEE/NEET rows all share one class value, so a Class filter would be a useless single-choice control.
   const showClass = useMemo(() => optionsFor(videos, EMPTY_FILTERS, "class").length > 1, [videos]);
@@ -76,7 +78,7 @@ export function VideoLibrary({ videos, examLabel }: { videos: Video[]; examLabel
         </div>
       ) : (
         <>
-          <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className={`ol-fade-in grid gap-x-6 gap-y-10 transition-opacity sm:grid-cols-2 lg:grid-cols-3 ${df !== f ? "opacity-60" : ""}`}>
             {results.slice(0, shown).map((v) => <li key={v.id}><VideoCard video={v} /></li>)}
           </ul>
           {results.length > shown && <div className="mt-8 text-center"><Button variant="secondary" onClick={() => setShown((n) => n + PAGE)}>Show more</Button></div>}

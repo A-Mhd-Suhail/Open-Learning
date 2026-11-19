@@ -57,3 +57,10 @@ Open-Learning-Videos.backup-*.xlsx
 .claude/skills/
 # one-off backup of the video workbook (the main workbook stays tracked)
 *.backup-*.xlsx
+
+# Playwright
+/e2e/.auth/
+/test-results/
+/playwright-report/
+/.playwright-mcp/
+/.work/

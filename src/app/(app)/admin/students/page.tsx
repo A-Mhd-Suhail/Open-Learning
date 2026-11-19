@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import { requireAdmin } from "@/lib/auth";
 import { PageHeader } from "@/components/app/PageHeader";
 
@@ -17,7 +18,7 @@ export default async function StudentsPage({ searchParams }: PageProps<"/admin/s
       <form className="mb-4 flex gap-2" role="search">
         <label htmlFor="q" className="sr-only">Search students</label>
         <input id="q" name="q" defaultValue={q} placeholder="Search name, email or Student ID" className="h-11 min-w-0 flex-1 sm:max-w-sm sm:flex-none sm:w-full rounded-md border border-border bg-card px-4 text-sm" />
-        <button className="h-11 cursor-pointer rounded-md bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover">Search</button>
+        <PendingButton className="h-11 cursor-pointer rounded-md bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover">Search</PendingButton>
       </form>
       <div className="overflow-x-auto rounded-lg border border-border bg-card">
         <table className="w-full min-w-[640px] text-left text-sm">

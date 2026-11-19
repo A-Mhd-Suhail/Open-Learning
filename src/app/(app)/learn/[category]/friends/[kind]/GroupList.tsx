@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Lock, Globe } from "lucide-react";
 import type { Group } from "@/lib/groups";
 import { groupPath } from "@/lib/groups";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { SubmitButton } from "@/components/ui/button";
 import { joinGroupAction } from "../actions";
 
 export function GroupList({ groups, category, joined, empty }: { groups: (Group & { members?: number })[]; category: string; joined?: Set<string>; empty: React.ReactNode }) {
@@ -26,7 +27,7 @@ export function GroupList({ groups, category, joined, empty }: { groups: (Group 
             ) : (
               <form action={joinGroupAction}>
                 <input type="hidden" name="id" value={g.id} /><input type="hidden" name="category" value={category} /><input type="hidden" name="kind" value={g.type} />
-                <button className={buttonVariants()}>Join</button>
+                <SubmitButton pendingText="Joining…">Join</SubmitButton>
               </form>
             )}
           </li>

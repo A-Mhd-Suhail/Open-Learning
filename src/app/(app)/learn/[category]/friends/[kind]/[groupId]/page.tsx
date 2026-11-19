@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
 import { CopyButton } from "@/components/app/CopyButton";
@@ -45,7 +46,7 @@ export default async function GroupPage({ params }: PageProps<"/learn/[category]
         <form action={joinGroupAction} className="rounded-lg border border-border bg-card p-6">
           <p className="mb-4 text-muted-foreground">{isLang ? "Join this room to take part." : "Join this group to read and take part in the conversation."}</p>
           <input type="hidden" name="id" value={group.id} /><input type="hidden" name="category" value={category} /><input type="hidden" name="kind" value={kind} />
-          <button className="h-11 cursor-pointer rounded-md bg-primary px-6 text-sm font-semibold text-on-primary hover:bg-primary-hover">{isLang ? "Join room" : "Join group"}</button>
+          <PendingButton className="h-11 cursor-pointer rounded-md bg-primary px-6 text-sm font-semibold text-on-primary hover:bg-primary-hover">{isLang ? "Join room" : "Join group"}</PendingButton>
         </form>
       </>
     );
@@ -117,7 +118,7 @@ export default async function GroupPage({ params }: PageProps<"/learn/[category]
           )}
           <form action={leaveGroupAction}>
             <input type="hidden" name="id" value={group.id} /><input type="hidden" name="category" value={category} /><input type="hidden" name="kind" value={kind} />
-            <button className="h-11 w-full cursor-pointer rounded-md border border-border text-sm font-semibold text-destructive hover:bg-muted">{isLang ? "Leave room" : "Leave group"}</button>
+            <PendingButton className="h-11 w-full cursor-pointer rounded-md border border-border text-sm font-semibold text-destructive hover:bg-muted">{isLang ? "Leave room" : "Leave group"}</PendingButton>
           </form>
         </aside>
       </div>

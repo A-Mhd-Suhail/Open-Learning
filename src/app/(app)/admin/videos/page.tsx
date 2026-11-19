@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
@@ -40,7 +41,7 @@ export default async function AdminVideos({ searchParams }: PageProps<"/admin/vi
                     <td className="px-4 py-3 font-mono">{v.video_id}</td><td className="px-4 py-3">{v.title}</td><td className="px-4 py-3">{v.exam}</td><td className="px-4 py-3">{v.subject}</td><td className="px-4 py-3">{v.chapter}</td>
                     <td className="px-4 py-3"><div className="flex justify-end gap-1">
                       <Link href={`/admin/videos/${v.id}`} className="inline-flex h-11 items-center rounded-lg px-3 font-semibold hover:bg-muted">Edit</Link>
-                      <form action={deleteVideo}><input type="hidden" name="id" value={v.id} /><button className="h-11 cursor-pointer rounded-lg px-3 font-semibold text-destructive hover:bg-muted" aria-label={`Delete ${v.title}`}>Delete</button></form>
+                      <form action={deleteVideo}><input type="hidden" name="id" value={v.id} /><PendingButton className="h-11 cursor-pointer rounded-lg px-3 font-semibold text-destructive hover:bg-muted" aria-label={`Delete ${v.title}`}>Delete</PendingButton></form>
                     </div></td>
                   </tr>
                 ))}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import Link from "next/link";
 import { Phone, Search, UserMinus, UserPlus, Check, X } from "lucide-react";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -51,7 +52,7 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
           <form role="search" className="mt-3 flex gap-2">
             <label htmlFor="q" className="sr-only">Search by name or Student ID</label>
             <input id="q" name="q" defaultValue={q} placeholder="Name or Student ID (e.g. OL-2026-000123)" className="h-11 w-full max-w-md rounded-md border border-border bg-background px-4 text-sm" />
-            <button className={`${btn} h-11 bg-primary px-5 text-on-primary hover:bg-primary-hover`}><Search size={16} aria-hidden="true" />Search</button>
+            <PendingButton className={`${btn} h-11 bg-primary px-5 text-on-primary hover:bg-primary-hover`}><Search size={16} aria-hidden="true" />Search</PendingButton>
           </form>
           {q.length >= 2 && (
             <ul className="mt-4 divide-y divide-border">
@@ -62,7 +63,7 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
                     <Link href={`${base}/my-friends/${p.student_id}`} className="hover:underline"><strong>{p.display_name}</strong> <span className="font-mono text-xs text-muted-foreground">{p.student_id}</span></Link>
                     {isFriend ? <span className="text-sm text-muted-foreground">Friends</span>
                       : pendingOut ? <span className="text-sm text-muted-foreground">Request sent</span>
-                      : <form action={sendFriendRequestAction}>{hidden(p.id)}<button className={`${btn} bg-primary text-on-primary hover:bg-primary-hover`}><UserPlus size={14} aria-hidden="true" />{pendingIn ? "Accept (they asked)" : "Add friend"}</button></form>}
+                      : <form action={sendFriendRequestAction}>{hidden(p.id)}<PendingButton className={`${btn} bg-primary text-on-primary hover:bg-primary-hover`}><UserPlus size={14} aria-hidden="true" />{pendingIn ? "Accept (they asked)" : "Add friend"}</PendingButton></form>}
                   </li>
                 );
               })}
@@ -79,8 +80,8 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
                 <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
                   <span><strong>{name(r.sender_id)}</strong> <span className="font-mono text-xs text-muted-foreground">{sid(r.sender_id)}</span></span>
                   <span className="flex gap-2">
-                    <form action={respondFriendRequestAction}><input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value="1" /><button className={`${btn} bg-success text-white`}><Check size={14} aria-hidden="true" />Accept</button></form>
-                    <form action={respondFriendRequestAction}><input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value="0" /><button className={`${btn} border border-border hover:bg-muted`}><X size={14} aria-hidden="true" />Reject</button></form>
+                    <form action={respondFriendRequestAction}><input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value="1" /><PendingButton className={`${btn} bg-success text-white`}><Check size={14} aria-hidden="true" />Accept</PendingButton></form>
+                    <form action={respondFriendRequestAction}><input type="hidden" name="id" value={r.id} /><input type="hidden" name="accept" value="0" /><PendingButton className={`${btn} border border-border hover:bg-muted`}><X size={14} aria-hidden="true" />Reject</PendingButton></form>
                   </span>
                 </li>
               ))}
@@ -96,10 +97,10 @@ export default async function MyFriends({ params, searchParams }: PageProps<"/le
                 <li key={id} className="flex flex-wrap items-center justify-between gap-3 py-3">
                   <Link href={`${base}/my-friends/${sid(id)}`} className="hover:underline"><strong>{name(id)}</strong> <span className="font-mono text-xs text-muted-foreground">{sid(id)}</span></Link>
                   <span className="flex flex-wrap gap-2">
-                    {livekitConfigured() && <form action={startCallAction}>{hidden(id)}<button className={`${btn} bg-primary text-on-primary hover:bg-primary-hover`}><Phone size={14} aria-hidden="true" />Call</button></form>}
+                    {livekitConfigured() && <form action={startCallAction}>{hidden(id)}<PendingButton className={`${btn} bg-primary text-on-primary hover:bg-primary-hover`}><Phone size={14} aria-hidden="true" />Call</PendingButton></form>}
                     <Link href={`${base}/chat/mine`} className={`${btn} border border-border hover:bg-muted`}>Group Chat</Link>
                     <Link href={`${base}/discussion/mine`} className={`${btn} border border-border hover:bg-muted`}>Discussion</Link>
-                    <form action={removeFriendAction}>{hidden(id)}<button className={`${btn} text-destructive hover:bg-muted`} aria-label={`Remove ${name(id)}`}><UserMinus size={14} aria-hidden="true" />Remove</button></form>
+                    <form action={removeFriendAction}>{hidden(id)}<PendingButton className={`${btn} text-destructive hover:bg-muted`} aria-label={`Remove ${name(id)}`}><UserMinus size={14} aria-hidden="true" />Remove</PendingButton></form>
                   </span>
                 </li>
               ))}

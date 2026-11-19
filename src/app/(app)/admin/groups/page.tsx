@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -30,7 +31,7 @@ export default async function GroupsPage() {
                 <td className="px-4 py-3 capitalize">{g.type}</td><td className="px-4 py-3 uppercase">{g.category}</td><td className="px-4 py-3 capitalize">{g.visibility}</td>
                 <td className="px-4 py-3">{(g.group_members as unknown as { count: number }[])[0]?.count ?? 0}</td>
                 <td className="px-4 py-3 text-right">{!g.is_general && (
-                  <form action={deleteGroup}><input type="hidden" name="id" value={g.id} /><button className="h-11 cursor-pointer rounded-lg px-3 text-sm font-semibold text-destructive hover:bg-muted">Delete</button></form>
+                  <form action={deleteGroup}><input type="hidden" name="id" value={g.id} /><PendingButton className="h-11 cursor-pointer rounded-lg px-3 text-sm font-semibold text-destructive hover:bg-muted">Delete</PendingButton></form>
                 )}</td>
               </tr>
             ))}

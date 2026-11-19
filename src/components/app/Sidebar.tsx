@@ -1,11 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
+import { NavProgress } from "@/components/app/NavProgress";
 import { usePathname } from "next/navigation";
 import { GraduationCap, LayoutDashboard, LogOut, Menu, Shield, User, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { PendingButton } from "@/components/ui/pending-button";
 import { cn } from "@/lib/utils";
+
+/** Small spinner shown inside a nav link while its route is loading (must render inside <Link>). */
+function PendingDot() {
+  const { pending } = useLinkStatus();
+  return pending ? <span aria-hidden="true" className="ol-spinner ml-auto h-3.5 w-3.5 rounded-full border-2 border-current border-t-transparent" /> : null;
+}
 
 type Props = { name: string; studentId: string; isAdmin: boolean; signOut: () => Promise<void> };
 
@@ -35,6 +43,7 @@ export function AppShell({ name, studentId, isAdmin, signOut, children }: Props 
             className={cn("flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors",
               active ? "bg-accent text-on-accent" : "text-band-muted hover:bg-white/10 hover:text-on-band")}>
             <it.icon size={18} strokeWidth={1.9} aria-hidden="true" /> {it.label}
+            <PendingDot />
           </Link>
         );
       })}
@@ -48,7 +57,7 @@ export function AppShell({ name, studentId, isAdmin, signOut, children }: Props 
       </div>
       <div className="mt-3 flex items-center gap-1">
         <form action={signOut} className="flex-1">
-          <button type="submit" className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-md px-3 text-sm font-medium text-band-muted hover:bg-white/10 hover:text-on-band"><LogOut size={16} aria-hidden="true" />Sign out</button>
+          <PendingButton className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-md px-3 text-sm font-medium text-band-muted hover:bg-white/10 hover:text-on-band" pendingText="Signing out…"><LogOut size={16} aria-hidden="true" />Sign out</PendingButton>
         </form>
         <ThemeToggle className="text-band-muted hover:bg-white/10 hover:text-on-band" />
       </div>
@@ -56,6 +65,7 @@ export function AppShell({ name, studentId, isAdmin, signOut, children }: Props 
   );
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[248px_1fr]">
+      <NavProgress />
       <aside className="band-surface sticky top-0 hidden h-dvh flex-col gap-8 bg-band p-4 lg:flex">
         <Logo href="/dashboard" inverse className="px-2 pt-2" />
         {nav}

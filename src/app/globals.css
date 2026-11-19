@@ -133,8 +133,26 @@ code, .num { font-variant-numeric: tabular-nums; }
 @media (min-width: 640px) { .ol-dialog[open] { animation: ol-pop 0.18s ease-out; } }
 dialog:not([open]) { display: none; }
 
+/* Loading system: flat shimmer for skeletons, a thin route progress bar, a content fade-in. All CSS, no JS animation. */
+@keyframes ol-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.ol-skeleton {
+  background-color: var(--muted);
+  background-image: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--card) 70%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: ol-shimmer 1.6s linear infinite;
+}
+@keyframes ol-progress { from { transform: scaleX(0.08); } to { transform: scaleX(0.92); } }
+.ol-progress { transform-origin: left; animation: ol-progress 8s cubic-bezier(0.1, 0.6, 0.2, 1) forwards; }
+@keyframes ol-spin { to { transform: rotate(360deg); } }
+.ol-spinner { animation: ol-spin 0.7s linear infinite; }
+.ol-fade-in { animation: ol-fade 0.25s ease-out; }
+.ol-pressable { transition: transform 120ms ease-out, background-color 150ms, border-color 150ms; }
+.ol-pressable:active:not(:disabled) { transform: scale(0.98); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .ol-skeleton { animation: none; background-image: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-delay: 0ms !important;

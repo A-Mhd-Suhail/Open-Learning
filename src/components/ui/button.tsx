@@ -1,26 +1,10 @@
+"use client";
 import Link from "next/link";
-import { cva, type VariantProps } from "class-variance-authority";
+import { useFormStatus } from "react-dom";
+import { Loader2 } from "lucide-react";
+import type { VariantProps } from "class-variance-authority";
+import { buttonVariants } from "./button-variants";
 import { cn } from "@/lib/utils";
-
-export const buttonVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-semibold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        primary: "bg-primary text-on-primary hover:bg-primary-hover",
-        secondary: "border border-border bg-card text-foreground hover:border-foreground/40 hover:bg-muted",
-        ghost: "text-foreground hover:bg-muted",
-        /** Highlighter yellow: only for the single primary action on a navy band. */
-        accent: "bg-accent text-on-accent hover:brightness-95",
-      },
-      size: {
-        md: "h-11 px-5 text-sm",
-        lg: "h-12 px-6 text-base",
-      },
-    },
-    defaultVariants: { variant: "primary", size: "md" },
-  },
-);
 
 type Props = VariantProps<typeof buttonVariants> & { className?: string };
 
@@ -35,7 +19,18 @@ export function ButtonLink({
 }
 
 export function Button({
-  variant, size, className, ...rest
-}: Props & React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button className={cn(buttonVariants({ variant, size }), className)} {...rest} />;
+  variant, size, className, loading, loadingText, children, disabled, ...rest
+}: Props & React.ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean; loadingText?: string }) {
+  return (
+    <button className={cn(buttonVariants({ variant, size }), className)} disabled={disabled || loading} aria-busy={loading || undefined} {...rest}>
+      {loading && <Loader2 size={16} aria-hidden="true" className="ol-spinner" />}
+      {loading && loadingText ? loadingText : children}
+    </button>
+  );
+}
+
+/** Submit button for plain server-action forms: reads the form's pending state, so double submits are blocked and the label changes. */
+export function SubmitButton({ children, pendingText, ...props }: Omit<React.ComponentProps<typeof Button>, "loading" | "type"> & { pendingText?: string }) {
+  const { pending } = useFormStatus();
+  return <Button type="submit" loading={pending} loadingText={pendingText} {...props}>{children}</Button>;
 }

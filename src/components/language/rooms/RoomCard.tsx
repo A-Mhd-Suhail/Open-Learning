@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Globe, Lock, Users } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { SubmitButton } from "@/components/ui/button";
 import { groupPath } from "@/lib/groups";
 import type { LanguageRoom } from "@/lib/language/types";
 import { joinLanguageRoomAction } from "@/app/(app)/learn/[category]/rooms/actions";
@@ -36,7 +37,7 @@ export function RoomCard({ room, category, isOwn }: { room: LanguageRoom; catego
         ) : (
           <form action={joinLanguageRoomAction}>
             <input type="hidden" name="id" value={room.id} /><input type="hidden" name="category" value={category} /><input type="hidden" name="kind" value={room.type} />
-            <button className={buttonVariants()} aria-label={`Join ${room.name}`}>{full ? "Join (full now)" : "Join"}</button>
+            <SubmitButton pendingText="Joining…" aria-label={`Join ${room.name}`}>{full ? "Join (full now)" : "Join"}</SubmitButton>
           </form>
         )}
       </div>

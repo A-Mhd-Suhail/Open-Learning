@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PendingButton } from "@/components/ui/pending-button";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
 import { requireSession } from "@/lib/auth";
@@ -37,7 +38,7 @@ export default async function StudentProfile({ params }: PageProps<"/learn/[cate
           <div className="flex justify-between"><dt className="text-muted-foreground">Member since</dt><dd>{joined}</dd></div>
         </dl>
         {!isMe && !isFriend && (
-          <form action={sendFriendRequestAction} className="mt-5"><input type="hidden" name="id" value={p.id} /><button className="h-11 cursor-pointer rounded-md bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover">Send friend request</button></form>
+          <form action={sendFriendRequestAction} className="mt-5"><input type="hidden" name="id" value={p.id} /><PendingButton className="h-11 cursor-pointer rounded-md bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover">Send friend request</PendingButton></form>
         )}
         {!isMe && isFriend && <InviteToGroup friendId={p.id} groups={groups} />}
       </section>
