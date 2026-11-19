@@ -1,0 +1,113 @@
+﻿language,channel,class,subject,chapter,reason
+English,Physics Wallah,10,chemistry,Periodic Classification of Elements,nomatch
+English,Physics Wallah,11,chemistry,The s-Block Elements,nomatch
+English,Physics Wallah,11,chemistry,The p-Block Elements,nomatch
+English,Physics Wallah,11,chemistry,Hydrocarbons,nomatch
+English,Physics Wallah,11,chemistry,Environmental Chemistry,nomatch
+English,Physics Wallah,12,chemistry,The d and f Block Elements,nomatch
+English,Physics Wallah,12,chemistry,Coordination Compounds,nomatch
+English,Physics Wallah,12,chemistry,Aldehydes Ketones and Carboxylic Acids,nomatch
+English,Physics Wallah,12,chemistry,Amines,nomatch
+English,Physics Wallah,12,chemistry,Biomolecules,nomatch
+English,Physics Wallah,12,chemistry,Polymers,nomatch
+English,Physics Wallah,12,chemistry,Chemistry in Everyday Life,nomatch
+English,Physics Wallah,9,math,Polynomials,nomatch
+English,Physics Wallah,9,math,Coordinate Geometry,nomatch
+English,Physics Wallah,9,math,Quadrilaterals,nomatch
+English,Physics Wallah,9,math,Circles,rejected (class mismatch or duplicate video)
+English,Physics Wallah,9,math,Surface Areas and Volumes,rejected (class mismatch or duplicate video)
+English,Physics Wallah,9,math,Statistics,rejected (class mismatch or duplicate video)
+English,Physics Wallah,10,math,Polynomials,nomatch
+English,Physics Wallah,10,math,Pair of Linear Equations in Two Variables,nomatch
+English,Physics Wallah,11,math,Sets,nomatch
+English,Physics Wallah,11,math,Relations and Functions,nomatch
+English,Physics Wallah,11,math,Complex Numbers and Quadratic Equations,nomatch
+English,Physics Wallah,11,math,Permutations and Combinations,nomatch
+English,Physics Wallah,11,math,Binomial Theorem,nomatch
+English,Physics Wallah,11,math,Sequences and Series,nomatch
+English,Physics Wallah,11,math,Straight Lines,nomatch
+English,Physics Wallah,11,math,Conic Sections,nomatch
+English,Physics Wallah,11,math,Introduction to Three Dimensional Geometry,nomatch
+English,Physics Wallah,11,math,Limits and Derivatives,nomatch
+English,Physics Wallah,11,math,Statistics,rejected (class mismatch or duplicate video)
+English,Physics Wallah,11,math,Probability,rejected (class mismatch or duplicate video)
+English,Physics Wallah,12,math,Relations and Functions,nomatch
+English,Physics Wallah,12,math,Inverse Trigonometric Functions,nomatch
+English,Physics Wallah,12,math,Matrices,nomatch
+English,Physics Wallah,12,math,Determinants,nomatch
+English,Physics Wallah,12,math,Continuity and Differentiability,nomatch
+English,Physics Wallah,12,math,Application of Derivatives,nomatch
+English,Physics Wallah,12,math,Integrals,nomatch
+English,Physics Wallah,12,math,Application of Integrals,nomatch
+English,Physics Wallah,12,math,Differential Equations,nomatch
+English,Physics Wallah,12,math,Vector Algebra,nomatch
+English,Physics Wallah,12,math,Three Dimensional Geometry,nomatch
+English,Physics Wallah,12,math,Linear Programming,nomatch
+English,Physics Wallah,12,math,Probability,rejected (class mismatch or duplicate video)
+English,Physics Wallah,9,biology,Why Do We Fall Ill,nomatch
+English,Physics Wallah,11,biology,The Living World,nomatch
+English,Physics Wallah,11,biology,Biological Classification,nomatch
+English,Physics Wallah,11,biology,Morphology of Flowering Plants,nomatch
+English,Physics Wallah,11,biology,Anatomy of Flowering Plants,nomatch
+English,Physics Wallah,11,biology,Structural Organisation in Animals,nomatch
+English,Physics Wallah,11,biology,Cell The Unit of Life,nomatch
+English,Physics Wallah,11,biology,Cell Cycle and Cell Division,nomatch
+English,Physics Wallah,11,biology,Transport in Plants,nomatch
+English,Physics Wallah,11,biology,Plant Growth and Development,nomatch
+English,Physics Wallah,11,biology,Digestion and Absorption,nomatch
+English,Physics Wallah,11,biology,Body Fluids and Circulation,nomatch
+English,Physics Wallah,11,biology,Neural Control and Coordination,nomatch
+English,Physics Wallah,11,biology,Chemical Coordination and Integration,nomatch
+English,Physics Wallah,12,biology,Reproduction in Organisms,nomatch
+English,Physics Wallah,12,biology,Sexual Reproduction in Flowering Plants,nomatch
+English,Physics Wallah,12,biology,Human Reproduction,nomatch
+English,Physics Wallah,12,biology,Reproductive Health,nomatch
+English,Physics Wallah,12,biology,Principles of Inheritance and Variation,nomatch
+English,Physics Wallah,12,biology,Molecular Basis of Inheritance,nomatch
+English,Physics Wallah,12,biology,Evolution,nomatch
+English,Physics Wallah,12,biology,Human Health and Disease,nomatch
+English,Physics Wallah,12,biology,Microbes in Human Welfare,nomatch
+English,Physics Wallah,12,biology,Biotechnology Principles and Processes,nomatch
+English,Physics Wallah,12,biology,Biotechnology and its Applications,nomatch
+English,Physics Wallah,12,biology,Organisms and Populations,nomatch
+English,Physics Wallah,12,biology,Ecosystem,nomatch
+English,Physics Wallah,12,biology,Biodiversity and Conservation,nomatch
+English,Physics Wallah,12,biology,Environmental Issues,nomatch
+English,Magnet Brains,10,chemistry,Acids Bases and Salts,nomatch
+English,Magnet Brains,11,chemistry,The p-Block Elements,'NoneType' object has no attribute 'group'
+English,Magnet Brains,10,math,Real Numbers,nomatch
+English,Magnet Brains,10,math,Triangles,nomatch
+English,Magnet Brains,11,math,Relations and Functions,nomatch
+English,Magnet Brains,11,math,Introduction to Three Dimensional Geometry,nomatch
+English,Magnet Brains,12,math,Determinants,'NoneType' object has no attribute 'group'
+English,Magnet Brains,12,math,Continuity and Differentiability,nomatch
+English,Magnet Brains,12,math,Application of Integrals,nomatch
+English,Magnet Brains,10,biology,Heredity and Evolution,nomatch
+English,Magnet Brains,11,biology,The Living World,'NoneType' object has no attribute 'group'
+English,Magnet Brains,11,biology,Anatomy of Flowering Plants,nomatch
+English,Magnet Brains,11,biology,Cell Cycle and Cell Division,nomatch
+English,Magnet Brains,11,biology,Neural Control and Coordination,nomatch
+English,Magnet Brains,12,biology,Microbes in Human Welfare,nomatch
+English,LearnoHub,12,chemistry,Coordination Compounds,nomatch
+English,LearnoHub,12,chemistry,Alcohols Phenols and Ethers,nomatch
+English,LearnoHub,12,chemistry,Aldehydes Ketones and Carboxylic Acids,nomatch
+English,LearnoHub,12,chemistry,Polymers,nomatch
+English,LearnoHub,9,math,Coordinate Geometry,nomatch
+English,LearnoHub,9,math,Surface Areas and Volumes,rejected (class mismatch or duplicate video)
+English,LearnoHub,10,math,Quadratic Equations,nomatch
+English,LearnoHub,10,math,Triangles,nomatch
+English,LearnoHub,10,math,Circles,nomatch
+English,LearnoHub,10,math,Surface Areas and Volumes,nomatch
+English,LearnoHub,11,math,Linear Inequalities,nomatch
+English,LearnoHub,11,math,Permutations and Combinations,nomatch
+English,LearnoHub,11,math,Introduction to Three Dimensional Geometry,nomatch
+English,LearnoHub,12,math,Continuity and Differentiability,nomatch
+English,LearnoHub,12,math,Three Dimensional Geometry,nomatch
+English,LearnoHub,9,biology,The Fundamental Unit of Life,nomatch
+English,LearnoHub,9,biology,Tissues,'NoneType' object has no attribute 'group'
+English,LearnoHub,11,biology,Structural Organisation in Animals,nomatch
+English,LearnoHub,11,biology,Biomolecules,nomatch
+English,LearnoHub,11,biology,Plant Growth and Development,nomatch
+English,LearnoHub,12,biology,Human Reproduction,rejected (class mismatch or duplicate video)
+English,LearnoHub,12,biology,Biodiversity and Conservation,nomatch
+English,Physics Wallah,11,chemistry,Hydrogen,wrong match removed

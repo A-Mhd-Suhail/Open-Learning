@@ -1,0 +1,131 @@
+{
+ "ok": 381,
+ "skipped": [
+  {
+   "row": 13,
+   "title": "Classification of Elements and Periodicity in Properties",
+   "reason": "chapter words match 25%",
+   "found": "Periodic Classification in One Shot | Class 11th Chemistry in Pure English"
+  },
+  {
+   "row": 15,
+   "title": "States of Matter",
+   "reason": "chapter words match 50%",
+   "found": "State Of Matter In One Shot | JEE/NEET/Class 11th Boards || Victory Batch"
+  },
+  {
+   "row": 18,
+   "title": "Redox Reactions",
+   "reason": "chapter words match 50%",
+   "found": "Redox Reaction in One Shot | Class 11th Chemistry in Pure English"
+  },
+  {
+   "row": 22,
+   "title": "Organic Chemistry – Some Basic Principles and Techniques",
+   "reason": "chapter words match 33%",
+   "found": "General Organic Chemistry In One Shot | JEE/NEET/Class 11th Boards || Victory Batch"
+  },
+  {
+   "row": 52,
+   "title": "Quadratic Equations",
+   "reason": "chapter words match 50%",
+   "found": "QUADRATIC EQUATION Class 10 Maths | Complete One Shot in Pure English"
+  },
+  {
+   "row": 56,
+   "title": "Introduction to Trigonometry",
+   "reason": "chapter words match 50%",
+   "found": "CBSE Class 10th Maths | TRIGONOMETRY One Shot In Pure English"
+  },
+  {
+   "row": 64,
+   "title": "Relations and Functions",
+   "reason": "chapter words match 0%",
+   "found": "Relation \\u0026 Function in One Shot | Class 11th Maths in Pure English"
+  },
+  {
+   "row": 70,
+   "title": "Sequences and Series",
+   "reason": "chapter words match 50%",
+   "found": "Sequence And Series | Full Chapter in ONE SHOT | Chapter 8 | Class 11 Maths 🔥"
+  },
+  {
+   "row": 73,
+   "title": "Introduction to Three Dimensional Geometry",
+   "reason": "chapter words match 50%",
+   "found": "Introduction to 3D Geometry | Full Chapter in ONE SHOT | Chapter 11 | Class 11 Maths 🔥"
+  },
+  {
+   "row": 84,
+   "title": "Application of Integrals",
+   "reason": "chapter words match 50%",
+   "found": "Applications Of Integrals Class 12 Maths AOI |NCERT | Chapter 8 One Shot Video |Full Chapter 2026-27"
+  },
+  {
+   "row": 87,
+   "title": "Three Dimensional Geometry",
+   "reason": "chapter words match 33%",
+   "found": "3D Geometry Class 12 | Chapter 11 Maths One Shot | NCERT Full Concepts | CBSE Board 2026-2027"
+  },
+  {
+   "row": 132,
+   "title": "Organisms and Populations",
+   "reason": "chapter words match 50%",
+   "found": "ORGANISM AND POPULATION in 1 Shot | All Concepts Covered | UMEED NEET in Pure English"
+  },
+  {
+   "row": 135,
+   "title": "Environmental Issues",
+   "reason": "chapter words match 50%",
+   "found": "ENVIROMENTAL ISSUES in 80 minutes || Complete Chapter for NEET"
+  },
+  {
+   "row": 290,
+   "title": "Organic Chemistry – Some Basic Principles and Techniques",
+   "reason": "chapter words match 33%",
+   "found": "Organic Chemistry Class 11 | Chapter 12  NCERT CBSE NEET JEE  #1"
+  },
+  {
+   "row": 292,
+   "title": "Environmental Chemistry",
+   "reason": "chapter words match 0%",
+   "found": "p block elements Class 11 | Carbon family |CBSE NCERT NEET JEE | One Shot Hindi"
+  },
+  {
+   "row": 304,
+   "title": "Chemistry in Everyday Life",
+   "reason": "chapter words match 33%",
+   "found": "Biomolecules Class 12 Chemistry | NCERT Chapter 14 | One Shot |CBSE NEET JEE"
+  },
+  {
+   "row": 351,
+   "title": "Integrals",
+   "reason": "chapter words match 0%",
+   "found": "Integration Class 12 Maths | NCERT Chapter 7 | CBSE JEE | One Shot |हिंदी में"
+  },
+  {
+   "row": 355,
+   "title": "Three Dimensional Geometry",
+   "reason": "chapter words match 33%",
+   "found": "3d Geometry Class 12 Maths | NCERT Chapter 11 | CBSE JEE | One Shot |हिंदी में"
+  },
+  {
+   "row": 378,
+   "title": "Photosynthesis in Higher Plants",
+   "reason": "chapter words match 33%",
+   "found": "Class 11 Biology: Photosynthesis Part 1 | CBSE Boards \\u0026 NEET 2026-27 Exam Prep"
+  },
+  {
+   "row": 388,
+   "title": "Reproduction in Organisms",
+   "reason": "chapter words match 50%",
+   "found": "Human Reproduction Class 12 Biology in 1 Hour | Board Exam 2026-27 - NEET CBSE"
+  },
+  {
+   "row": 390,
+   "title": "Human Reproduction",
+   "reason": "chapter words match 0%",
+   "found": "Reproductive Health Class 12 Biology Full Chapter 3 | Class 12 Biology New NCERT 2026-27 CBSE NEET"
+  }
+ ]
+}

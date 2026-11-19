@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/*
+ * Open Learning design tokens. World: a study desk. Cool paper-grey ground, ink text,
+ * one deep-navy field for committed regions, and a flat highlighter yellow used the way a
+ * student uses a highlighter: sparingly, to mark the one thing that matters.
+ * No gradients, no glow, no tinted shadows.
+ */
+:root {
+  --background: #f3f5f7;
+  --foreground: #0c1a2b;
+  --card: #ffffff;
+  --card-foreground: #0c1a2b;
+  --primary: #0f3d6e;
+  --primary-hover: #0a2f57;
+  --on-primary: #ffffff;
+  --secondary: #2f6db0;
+  --accent: #ffd23f;
+  --on-accent: #0c1a2b;
+  --muted: #e8ecf1;
+  --muted-foreground: #4f5e6e;
+  --border: #d5dbe3;
+  --destructive: #b3261e;
+  --success: #1b7a47;
+  --ring: #0f3d6e;
+  --band: #0b2a4a;
+  --on-band: #f2f6fa;
+  --band-muted: #a9bbd0;
+}
+
+:root[data-theme="dark"] {
+  --background: #09121c;
+  --foreground: #e9eef4;
+  --card: #101c2a;
+  --card-foreground: #e9eef4;
+  --primary: #7db2ec;
+  --primary-hover: #a3c8f2;
+  --on-primary: #08131f;
+  --secondary: #5d95d0;
+  --accent: #ffd23f;
+  --on-accent: #0c1a2b;
+  --muted: #172638;
+  --muted-foreground: #9baabb;
+  --border: #223347;
+  --destructive: #f28b82;
+  --success: #5cc98a;
+  --ring: #7db2ec;
+  --band: #0f2238;
+  --on-band: #f2f6fa;
+  --band-muted: #9bb0c7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-ring: var(--ring);
+  --color-band: var(--band);
+  --color-on-band: var(--on-band);
+  --color-band-muted: var(--band-muted);
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { overflow-wrap: break-word; }
+/* Inputs at 16px on touch widths: iOS Safari zooms the page for anything smaller. */
+@media (max-width: 1023px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea { font-size: 16px; }
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  font-feature-settings: "tnum" 0;
+}
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.022em; text-wrap: balance; }
+h1 { font-weight: 650; }
+h2 { font-weight: 620; }
+p { text-wrap: pretty; }
+
+/* Browser surfaces themed from the palette */
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
+/* Focus ring on the navy band needs the highlighter colour to stay visible. */
+.band-surface :focus-visible { outline-color: var(--accent); }
+a { text-underline-offset: 3px; }
+input, select, textarea { color: var(--foreground); caret-color: var(--primary); accent-color: var(--primary); }
+input::placeholder, textarea::placeholder { color: var(--muted-foreground); opacity: 0.8; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; border-color: var(--ring); }
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+code, .num { font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* The highlighter: a flat swipe behind the one phrase that matters. */
+.mark {
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: 0 0.14em;
+  margin: 0 -0.06em;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* One authored moment: the hero's lesson rows settle in once. Content is visible without animation. */
+@keyframes ol-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: ol-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+
+/* Dialog: sheet slides up on phones, card fades in on larger screens. */
+@keyframes ol-sheet { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes ol-pop { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes ol-fade { from { opacity: 0; } to { opacity: 1; } }
+.ol-dialog[open] { animation: ol-sheet 0.22s cubic-bezier(0.16, 1, 0.3, 1); }
+.ol-dialog[open]::backdrop { animation: ol-fade 0.2s ease-out; }
+@media (min-width: 640px) { .ol-dialog[open] { animation: ol-pop 0.18s ease-out; } }
+dialog:not([open]) { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
